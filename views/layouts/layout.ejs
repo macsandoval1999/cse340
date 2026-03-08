@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+
+<body>
+    <div id="wrapper">
+        <%- include('../partials/header') %>
+        <%- include('../partials/navigation') %>
+
+        <main>
+            <%- body %>
+        </main>
+
+        <%- include('../partials/footer') %> <%# Include the footer partial %>
+    </div>
+</body>
+</html>
+
+
+
+<%#
+
+<[EJS Starting tags]:
+    %   Executes JavaScript code without outputting it.
+    %_  Executes JavaScript code without outputting it and removes whitespace before the opening tag.
+    %=  Executes JavaScript code and outputs the result into the template (HTML escaped).
+    %-  Executes JavaScript code and outputs the result into the template (unescaped).
+    %#  A comment that will not be included in the rendered HTML.
+    %%  Outputs a literal '%' character.
+
+[EJS Closing tags]>:
+%   Closing tag for EJS code blocks.
+-%  Trims all whitespace before the opening tag.
+_%  Removes all whitespace after the closing tag.
+
+%>
