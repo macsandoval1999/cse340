@@ -14,11 +14,10 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   background-image: url("../images/site/checkerboard.jpg");
   background-size: 350px 350px; /* Adjust the size of the background image as needed */
   max-width: 800px;
-
 }
 
 header {
