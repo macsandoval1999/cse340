@@ -1,6 +1,241 @@
-/******* Change Box Model ***************/
+/*******Universal Styles***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --primary-color: rgb(8, 35, 66);
+  --secondary-color: rgb(255, 255, 255);
+  --accent-color: rgb(34, 95, 110);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("../images/site/checkerboard.jpg");
+  background-size: 350px 350px; /* Adjust the size of the background image as needed */
+  max-width: 800px;
+
+}
+
+header {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 2rem 1rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.siteName a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+#tools a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+#tools a:hover {
+  color: var(--accent-color);
+  transition: all 0.1s ease;
+}
+
+nav {
+  background: var(--primary-color);
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+nav li {
+  margin: 0 10px;
+  color: var(--secondary-color);
+}
+nav a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-size: 1rem;
+}
+nav a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+
+.hero {
+  position: relative;
+  background-color: var(--secondary-color);
+  padding: 20px 5px;
+}
+#hero-title {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+.hero img {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  padding: 0 2rem;
+}
+#hero-message {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: var(--primary-color);
+  background-color: rgba(243, 243, 243, 0.699);
+  border: 0.1px solid var(--primary-color);
+  border-radius: 5px;
+  font-weight: 700;
+  padding: 10px;
+}
+#hero-message h3 {
+  font-size: 0.9rem;
+}
+#hero-message ul {
+  list-style: none;
+  padding: 10px;
+  font-size: 0.7rem;
+}
+#hero-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 5px;
+  transition:all 0.3s ease;
+}
+#hero-button:hover {
+  background-color: var(--primary-color);
+  transition: all 0.1s ease;
+}
+
+.home-content {
+  background-color: var(--secondary-color);
+  padding: 20px 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.home-content-item {
+  margin-bottom: 2rem;
+}
+.home-content-item h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+.home-reviews ul {
+  padding-left: 1.5rem;
+  line-height: 1.6;
+}
+.home-upgrades ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px 16px;
+  justify-items: center;
+}
+.home-upgrades li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+.upgrade-card {
+  width: 100%;
+  height: 80px;
+  background-color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary-color);
+}
+.upgrade-card img {
+  display: block;
+}
+.home-upgrades a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+footer {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8rem;
+}
+
+
+
+@media screen and (min-width: 450px) {
+  #hero-title {
+    font-size: 1.5rem;
+  }
+  #hero-message h3 {
+    font-size: 1.3rem;
+  }
+  #hero-message ul {
+    font-size: 1rem;
+  }
+  .siteName a {
+    font-size: 1.8rem;
+  }
+  .hero img {
+    padding: 0 4rem;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .home-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .home-reviews {
+    padding-left: 1rem;
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  .home-reviews ul {
+    padding-left: 1.5rem;
+    line-height: 2.5;
+  }
+  .home-upgrades {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  .hero img {
+    padding: 0 6rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    margin: 1rem auto;
+    border: 5px solid var(--accent-color);
+    border-radius: 10px;
+  }
 }
