@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS public.inventory
 	inv_color character varying NOT NULL,
 	classification_id integer NOT NULL,
 	CONSTRAINT inventory_pkey PRIMARY KEY (inv_id)
-)
+);
 
 
 
@@ -252,7 +252,7 @@ VALUES   (
 
 
 -- Update the inventory table, set the inv_description column to replace the old description with the new description, but only for GM Hummer vehicles
-UPDATE "inventory" SET "inv_description" = REPLACE("inv_description", "small interiors", "huge interior")
+UPDATE "inventory" SET "inv_description" = REPLACE("inv_description", 'small interiors', 'huge interior')
 WHERE
 "inv_make" = 'GM' AND "inv_model" = 'Hummer';
 
