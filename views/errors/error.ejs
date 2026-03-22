@@ -1,0 +1,47 @@
+<%# The Content Heading %>
+<%# Display the title if it exists %>
+<%# If no title is provided, redirect to the home page %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<section class="error-message">
+    <p>What are you trying to do? We're not that advanced! GO BACK!</p>
+    <div class="error-details">
+        <%- message %>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

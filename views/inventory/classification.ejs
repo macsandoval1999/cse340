@@ -1,0 +1,20 @@
+<%# The Content Heading %>
+<%# Display the title if it exists %>
+<%# If no title is provided, redirect to the home page %>
+<% if (title) { %> 
+    <h1><%= title %></h1>
+<% } else { 
+    res.redirect('/')
+} %>
+
+
+
+<%# The Message Block %>
+<%# Below, currently a comment as it isn't ready yet. %>
+<%# messages() %>
+
+
+
+<%# The Inventory Grid %>
+<%# Display the inventory grid %>
+<%- grid %>
