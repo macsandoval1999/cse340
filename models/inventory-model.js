@@ -38,4 +38,22 @@ async function getInventoryByClassificationId(classification_id) {  // defines a
 
 
 
-module.exports = { getClassifications, getInventoryByClassificationId } // exports an object that contains the "getClassifications" and "getInventoryByClassificationId" functions. This allows other parts of the application to import and use these functions to retrieve classification data and inventory items by classification ID from the database when needed.
+// Get a specific inventory item by inv_id
+async function getInventoryById(inv_id) { // defines an asynchronous function named "getInventoryById" that retrieves a single inventory item based on the inventory id. This is used to build the detail view for a single vehicle.
+    try {
+        const data = await pool.query(
+            `SELECT * FROM public.inventory AS i
+            JOIN public.classification AS c
+            ON i.classification_id = c.classification_id
+            WHERE i.inv_id = $1`,
+            [inv_id]
+        )
+        return data.rows[0]
+    } catch (error) {
+        console.error("getInventoryById error: " + error)
+    }
+}
+
+
+
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById } // exports an object that contains the "getClassifications" and "getInventoryByClassificationId" functions. This allows other parts of the application to import and use these functions to retrieve classification data and inventory items by classification ID from the database when needed.

@@ -1,8 +1,10 @@
+
+
 <%# The Content Heading %>
 <%# Display the title if it exists %>
 <%# If no title is provided, redirect to the home page %>
 <% if (title) { %> 
-    <h1><%= title %></h1>
+    <h1 class="vehicleTitle"><%= title %></h1>
 <% } else { 
     res.redirect('/')
 } %>

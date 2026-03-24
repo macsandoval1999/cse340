@@ -72,6 +72,36 @@ Util.buildClassificationGrid = async function (data) { // defines an asynchronou
 
 
 
+// Build the inventory detail view HTML
+Util.buildVehicleDetail = async function (vehicle) { // defines an asynchronous function named "buildVehicleDetail" that builds an HTML block for a single vehicle detail view.
+    if (!vehicle) {
+        return '<p class="notice">Sorry, that vehicle could not be found.</p>'
+    }
+
+    const price = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+    }).format(vehicle.inv_price)
+    const miles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles)
+
+    let detail = '<section class="vehicle-detail">'
+    detail += '<div class="vehicle-detail__media">'
+    detail += '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + '" />'
+    detail += '</div>'
+    detail += '<div class="vehicle-detail__info">'
+    detail += '<h2>' + vehicle.inv_year + ' ' + vehicle.inv_make + ' ' + vehicle.inv_model + '</h2>'
+    detail += '<p class="vehicle-detail__price">Price: ' + price + '</p>'
+    detail += '<p class="vehicle-detail__miles">Mileage: ' + miles + ' miles</p>'
+    detail += '<p><strong>Color:</strong> ' + vehicle.inv_color + '</p>'
+    detail += '<p><strong>Description:</strong> ' + vehicle.inv_description + '</p>'
+    detail += '</div>'
+    detail += '</section>'
+
+    return detail
+}
+
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

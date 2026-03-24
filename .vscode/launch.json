@@ -1,0 +1,32 @@
+/*
+launch.json
+********************************************
+This file contains the debug configurations for Visual Studio Code. It allows you to set up how you want to launch and debug your application. In this case, it is configured to launch a Node.js application using the server.js file as the entry point.
+The configuration includes the following properties:
+- "name": A friendly name for the configuration, which will be displayed in the debug panel
+- "program": The path to the main file of your application (in this case, server.js)
+- "request": The type of request, which is "launch" for starting the application
+- "skipFiles": An array of file patterns to skip when debugging (in this case, it skips all internal Node.js files)
+- "type": The type of debugger to use, which is "node" for Node.js applications.
+********************************************
+*/
+
+
+
+
+
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Launch CSE Motors",
+            "program": "${workspaceFolder}/server.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        }
+    ]
+}

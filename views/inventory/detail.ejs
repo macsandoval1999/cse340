@@ -1,0 +1,7 @@
+<%# The Content Heading %>
+<% if (title) { %>
+    <h1 class="vehicleTitle"><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<%# Vehicle Detail %>
+<%- detail %> <%# This will render the vehicle detail partial. detail is expected to be an HTML string containing the vehicle's detailed information, and is populated by the server-side logic found in the inventory controller. %>

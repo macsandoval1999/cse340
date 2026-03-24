@@ -16,7 +16,8 @@
 body {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   background-image: url("../images/site/checkerboard.jpg");
-  background-size: 350px 350px; /* Adjust the size of the background image as needed */
+  background-size: 350px 350px;
+  /* Adjust the size of the background image as needed */
   max-width: 800px;
 }
 
@@ -43,6 +44,7 @@ header {
   font-size: 0.8rem;
   transition: all 0.3s ease;
 }
+
 #tools a:hover {
   color: var(--accent-color);
   transition: all 0.1s ease;
@@ -59,15 +61,18 @@ nav ul {
   justify-content: space-evenly;
   align-items: center;
 }
+
 nav li {
   margin: 0 10px;
   color: var(--secondary-color);
 }
+
 nav a {
   text-decoration: none;
   color: var(--secondary-color);
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
+
 nav a::after {
   content: "";
   display: block;
@@ -76,30 +81,72 @@ nav a::after {
   background-color: var(--accent-color);
   transition: width 0.3s ease;
 }
+
 nav a:hover::after {
   width: 100%;
 }
 
+main {
+  background-color: var(--secondary-color);
+  padding: 1rem;
+  min-height: 80vh;
+}
+
+
+
+/**********************************************
+Error Page Styles
+***********************************************/
+
+.errorTitle {
+  color: rgba(0, 0, 0, 0.534);
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.error-message {
+  margin: 1rem auto;
+  max-width: 300px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.error-details {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.534);
+}
+
+
+
+/**********************************************
+Home Page Styles
+***********************************************/
+
+
+
 .hero {
   position: relative;
-  background-color: var(--secondary-color);
   padding: 20px 5px;
 }
+
 #hero-title {
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 2rem;
   font-size: 1.2rem;
 }
+
 .hero img {
   object-fit: cover;
   width: 100%;
   height: auto;
   padding: 0 2rem;
 }
+
 #hero-message {
   position: absolute;
-  top: 50%;
+  top: 55%;
   transform: translate(0, -50%);
   color: var(--primary-color);
   background-color: rgba(243, 243, 243, 0.699);
@@ -108,14 +155,17 @@ nav a:hover::after {
   font-weight: 700;
   padding: 10px;
 }
+
 #hero-message h3 {
   font-size: 0.9rem;
 }
+
 #hero-message ul {
   list-style: none;
   padding: 10px;
   font-size: 0.7rem;
 }
+
 #hero-button {
   display: inline-block;
   padding: 5px 10px;
@@ -124,30 +174,34 @@ nav a:hover::after {
   text-decoration: none;
   font-weight: 700;
   border-radius: 5px;
-  transition:all 0.3s ease;
+  transition: all 0.3s ease;
 }
+
 #hero-button:hover {
   background-color: var(--primary-color);
   transition: all 0.1s ease;
 }
 
 .home-content {
-  background-color: var(--secondary-color);
   padding: 20px 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
 .home-content-item {
   margin-bottom: 2rem;
 }
+
 .home-content-item h3 {
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
+
 .home-reviews ul {
   padding-left: 1.5rem;
   line-height: 1.6;
 }
+
 .home-upgrades ul {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -155,6 +209,7 @@ nav a:hover::after {
   gap: 12px 16px;
   justify-items: center;
 }
+
 .home-upgrades li {
   display: flex;
   flex-direction: column;
@@ -162,6 +217,7 @@ nav a:hover::after {
   gap: 5px;
   width: 100%;
 }
+
 .upgrade-card {
   width: 100%;
   height: 80px;
@@ -171,14 +227,128 @@ nav a:hover::after {
   justify-content: center;
   border: 1px solid var(--primary-color);
 }
+
 .upgrade-card img {
   display: block;
 }
+
 .home-upgrades a {
   color: var(--primary-color);
   text-decoration: underline;
   font-weight: 600;
 }
+
+
+
+/**********************************************
+Inventory Page Styles
+***********************************************/
+
+
+
+.vehicleTitle {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+#inv-display li {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  max-width: 375px;
+}
+
+#inv-display a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 700;
+  width: 100%;
+  height: 100%;
+}
+
+#inv-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#inv-display hr {
+  width: 100%;
+  border: 2.5px solid var(--accent-color);
+}
+
+.namePrice {
+  color: var(--primary-color);
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.namePrice h2,
+.namePrice span {
+  padding: 0.5rem 0 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+
+
+
+/**********************************************
+Vehicle Detail Page Styles
+***********************************************/
+
+
+
+.vehicle-detail {
+  background-color: var(--secondary-color);
+  padding: 20px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vehicle-detail__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.vehicle-detail__info h2 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-detail__price,
+.vehicle-detail__miles {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-detail__info p {
+  margin-bottom: 0.5rem;
+}
+
+
+/**********************************************
+Footer Styles
+***********************************************/
+
+
 
 footer {
   background-color: var(--primary-color);
@@ -188,23 +358,47 @@ footer {
   font-size: 0.8rem;
 }
 
+footer a {
+  color: var(--secondary-color);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+
+
+/**********************************************
+Media Queries
+***********************************************/
+
 
 
 @media screen and (min-width: 450px) {
   #hero-title {
     font-size: 1.5rem;
   }
+
   #hero-message h3 {
     font-size: 1.3rem;
   }
+
   #hero-message ul {
     font-size: 1rem;
   }
+
   .siteName a {
     font-size: 1.8rem;
   }
+
   .hero img {
     padding: 0 4rem;
+  }
+
+  nav a {
+    font-size: 1rem;
+  }
+
+  .vehicleTitle {
+    font-size: 1.5rem;
   }
 }
 
@@ -213,21 +407,36 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
+
   .home-reviews {
     padding-left: 1rem;
     grid-column: 2/3;
     grid-row: 1/2;
   }
+
   .home-reviews ul {
     padding-left: 1.5rem;
     line-height: 2.5;
   }
+
   .home-upgrades {
     grid-column: 1/2;
     grid-row: 1/2;
   }
+
   .hero img {
     padding: 0 6rem;
+  }
+
+  .vehicle-detail {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .vehicle-detail__media,
+  .vehicle-detail__info {
+    flex: 1 1 0;
   }
 }
 
