@@ -1,7 +1,7 @@
 /*
 invController.js
 **************************************
-
+This file is responsible for defining the controller functions that handle requests related to inventory operations. It imports the inventory model to interact with the database and utilities for additional functionality. The controller functions include building views for inventory by classification and inventory item details, as well as an intentional error trigger for testing purposes. Each function retrieves necessary data, processes it, and renders the appropriate view with the retrieved data.
 **************************************
 */
 
@@ -36,17 +36,17 @@ invController.buildByClassificationId = async function (req, res, next) { // def
 
 
 // Build inventory item detail view
-invController.buildByInventoryId = async function (req, res, next) { // defines an asynchronous function named "buildByInventoryId" that builds the detail view for a single inventory item.
-    const inv_id = req.params.invId
-    const vehicle = await invModel.getInventoryById(inv_id)
-    if (!vehicle) {
+invController.buildByInventoryId = async function (req, res, next) { // defines an asynchronous function named "buildByInventoryId" and assigns it as a property of the "invController" object. This function is designed to handle requests for building a detailed view of a specific inventory item based on its inventory ID. It takes three parameters: "req" (the request object), "res" (the response object), and "next" (a callback function to pass control to the next middleware). The function retrieves the inventory ID from the route parameters, uses it to query the database for the specific inventory item, checks if the item exists, retrieves navigation data, builds a detailed view of the vehicle, sets the page title based on the vehicle's make and model, and then renders the appropriate view with the retrieved data.
+    const inv_id = req.params.invId // retrieves the inventory ID from the route parameters of the incoming request. This ID is used to determine which specific inventory item to retrieve from the database for displaying its detailed information. The value is stored in the "inv_id" variable for use in subsequent database queries and operations.
+    const vehicle = await invModel.getInventoryById(inv_id) // calls the "getInventoryById" function from the inventory model, passing in the retrieved inventory ID. This function executes a database query to retrieve the specific inventory item that matches the provided ID. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The retrieved inventory item is stored in the "vehicle" variable, which can then be used to build the detailed view and render the appropriate page with the vehicle's information.
+    if (!vehicle) { // checks if the retrieved vehicle data is null or undefined, which would indicate that no inventory item was found with the specified ID. If this condition is true, it means that the requested vehicle does not exist in the database, and an error is thrown with a status of 404 and a message indicating that the vehicle could not be found. This error can then be caught and handled by error-handling middleware to display an appropriate error page to the user.
         throw { status: 404, message: "Sorry, that vehicle could not be found." }
     }
-    const nav = await utilities.getNav()
-    const detail = await utilities.buildVehicleDetail(vehicle)
-    const title = vehicle.inv_make + " " + vehicle.inv_model
+    const nav = await utilities.getNav() // calls the "getNav" function from the utilities module to retrieve navigation data. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The retrieved navigation data is stored in the "nav" variable, which can then be passed to the view for rendering, allowing the navigation links to be displayed on the vehicle detail page.
+    const detail = await utilities.buildVehicleDetail(vehicle) // calls the "buildVehicleDetail" function from the utilities module, passing in the retrieved vehicle data. This function is responsible for constructing an HTML block that contains detailed information about the specific vehicle. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The constructed detail view is stored in the "detail" variable, which can then be passed to the view for rendering, allowing the detailed information about the vehicle to be displayed on the page.
+    const title = vehicle.inv_make + " " + vehicle.inv_model // constructs the page title by concatenating the vehicle's make and model. This title is used to set the title of the detail view page, providing a clear and descriptive heading for the specific vehicle being displayed.
 
-    res.render("./inventory/detail", {
+    res.render("./inventory/detail", { // uses the "render" method of the response object to render the "detail" view template located in the "inventory" directory. The second argument is an object that contains data to be passed to the view template. In this case, it includes a "title" property that combines the vehicle's make and model to create a descriptive title for the page, a "nav" property that contains the navigation data retrieved from the utilities module, and a "detail" property that contains the constructed detailed view of the vehicle. This allows the view template to access and display the title, navigation links, and detailed information about the vehicle when rendering the page for the specified inventory item.
         title,
         nav,
         detail,

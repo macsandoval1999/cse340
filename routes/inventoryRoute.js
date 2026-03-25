@@ -1,7 +1,7 @@
 /*
 inventoryRoute.js
 **************************************
-
+This file is responsible for defining the routes related to inventory operations. It imports the Express framework to create a router, the inventory controller to handle the logic for inventory-related requests, and utilities for error handling. The routes defined in this file include a route for displaying inventory items by classification ID, a route for displaying detailed information about a specific inventory item by its ID, and a route to trigger an intentional error for testing purposes. Each route uses the appropriate controller function to handle the request and render the corresponding view with the necessary data.
 **************************************
 */
 
@@ -19,7 +19,7 @@ const utilities = require("../utilities/") // imports utilities to wrap route ha
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)); // This defines a route for handling GET requests to the URL pattern "/type/:classificationId". The ":classificationId" part is a route parameter that can be accessed in the controller to determine which classification's inventory to display. When a request matches this pattern, the "buildByClassificationId" function from the inventory controller is called to handle the request and render the appropriate view based on the classification ID provided in the URL.
 
 // Route to build inventory detail view
-router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId))
+router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId)) // This defines a route for handling GET requests to the URL pattern "/detail/:invId". The ":invId" part is a route parameter that can be accessed in the controller to determine which inventory item's details to display. When a request matches this pattern, the "buildByInventoryId" function from the inventory controller is called to handle the request and render the appropriate view based on the inventory ID provided in the URL.
 
 // Route to trigger an intentional error
 router.get("/error", utilities.handleErrors(invController.triggerError))

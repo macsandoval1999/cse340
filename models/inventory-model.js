@@ -40,7 +40,7 @@ async function getInventoryByClassificationId(classification_id) {  // defines a
 
 // Get a specific inventory item by inv_id
 async function getInventoryById(inv_id) { // defines an asynchronous function named "getInventoryById" that retrieves a single inventory item based on the inventory id. This is used to build the detail view for a single vehicle.
-    try {
+    try { // uses the connection pool to execute a SQL query against the database. The query retrieves a specific inventory item by joining the "inventory" and "classification" tables based on the provided inventory ID. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The result of the query is stored in the "data" variable, which can then be returned as an object representing the inventory item and its associated classification name. The query uses a parameterized query with "$1" to safely insert the inventory ID into the SQL statement, preventing SQL injection attacks. The "$1" is a placeholder, which will be replaced by the value shown in the brackets "[]" when the SQL statement is run. The function returns the first row of the result, which should contain the details of the specific inventory item. If an error occurs during the database query, it is caught and logged to the console.
         const data = await pool.query(
             `SELECT * FROM public.inventory AS i
             JOIN public.classification AS c
@@ -48,7 +48,7 @@ async function getInventoryById(inv_id) { // defines an asynchronous function na
             WHERE i.inv_id = $1`,
             [inv_id]
         )
-        return data.rows[0]
+        return data.rows[0] // returns the first row of the query result, which should contain the details of the specific inventory item that matches the provided inventory ID. This allows other parts of the application to access and use this data for rendering the detail view of the inventory item or performing further operations.
     } catch (error) {
         console.error("getInventoryById error: " + error)
     }

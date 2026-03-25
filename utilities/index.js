@@ -46,17 +46,15 @@ Util.buildClassificationGrid = async function (data) { // defines an asynchronou
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
             grid += '<li>'
-            grid += '<a href="../../inv/detail/' + vehicle.inv_id
-                + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model
-                + 'details"><img src="' + vehicle.inv_thumbnail
-                + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model
-                + ' on CSE Motors" /></a>'
+            grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
+            grid += '<img src="' + vehicle.inv_thumbnail + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors" />'
+            grid += '</a>'
             grid += '<div class="namePrice">'
-            grid += '<hr />'
+            grid += '<hr>'
             grid += '<h2>'
-            grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View '
-                + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-                + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+            grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
+            grid += vehicle.inv_make + ' ' + vehicle.inv_model
+            grid += '</a>'
             grid += '</h2>'
             grid += '<span>$'
                 + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>' // formats the inventory price using the Intl.NumberFormat object to display it in a more readable format with commas as thousand separators. The formatted price is then wrapped in a <span> element for styling purposes.
@@ -73,16 +71,16 @@ Util.buildClassificationGrid = async function (data) { // defines an asynchronou
 
 
 // Build the inventory detail view HTML
-Util.buildVehicleDetail = async function (vehicle) { // defines an asynchronous function named "buildVehicleDetail" that builds an HTML block for a single vehicle detail view.
+Util.buildVehicleDetail = async function (vehicle) { // defines an asynchronous function named "buildVehicleDetail" and assigns it as a property of the "Util" object. This function is designed to build an HTML block for the inventory detail view based on the provided vehicle data. It takes a single parameter, "vehicle", which is expected to be an object containing details about a specific inventory item. The function constructs an HTML section that includes the vehicle's image, make, model, year, price, mileage, color, and description. If the provided vehicle data is null or undefined, it returns a message indicating that the vehicle could not be found. The constructed detail view is returned for use in rendering the inventory detail page.
     if (!vehicle) {
         return '<p class="notice">Sorry, that vehicle could not be found.</p>'
     }
 
-    const price = new Intl.NumberFormat("en-US", {
+    const price = new Intl.NumberFormat("en-US", { // formats the inventory price using the Intl.NumberFormat object to display it in a more readable format with commas as thousand separators and a currency symbol. The "style" option is set to "currency" to indicate that the value should be formatted as a currency, and the "currency" option is set to "USD" to specify that the currency is US dollars. The formatted price is stored in the "price" variable, which can then be used in the HTML block for the vehicle detail view.
         style: "currency",
         currency: "USD",
     }).format(vehicle.inv_price)
-    const miles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles)
+    const miles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles) // formats the inventory mileage using the Intl.NumberFormat object to display it in a more readable format with commas as thousand separators. The formatted mileage is stored in the "miles" variable, which can then be used in the HTML block for the vehicle detail view.
 
     let detail = '<section class="vehicle-detail">'
     detail += '<div class="vehicle-detail__media">'
