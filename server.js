@@ -51,7 +51,7 @@ app.use(async (err, req, res, next) => { // defines an error-handling middleware
     if (err.status == 404) { // checks if the status code of the error is 404, which indicates that the requested page was not found. If this condition is true, it sets the "message" variable to the error message provided in the error object. This allows the error view to display a specific message indicating that the requested page was not found. If the status code is not 404, it sets a generic message indicating that there was a server error, which can be displayed on the error page for other types of errors.
         message = err.message
     } else {
-        message = 'Oh no! There was a crash. Maybe try a different route?'
+        message = err.message || 'Oh no! There was a crash. Maybe try a different route?'
     }
     res.render("errors/error", { // uses the "render" method of the response object to render the "error" view template located in the "errors" directory. The second argument is an object that contains data to be passed to the view template. In this case, it includes a "title" property that is set to either the status code of the error or a default message of 'Server Error', a "message" property that contains the error message, and a "nav" property that contains the navigation data retrieved from the utilities module. This allows the view template to access and display the title, error message, and navigation links when rendering the error page for the user.
         title: err.status || 'Server Error', // sets the title of the error page to either the status code of the error (if available) or a default message of 'Server Error'. This provides context to the user about the nature of the error that occurred.

@@ -56,7 +56,7 @@ invController.buildByInventoryId = async function (req, res, next) { // defines 
 
 
 // Intentional error for debugging
-invController.triggerError = async function (req, res, next) { // throws an error to test middleware handling.
+invController.triggerError = async function (req, res, next) { // throws an error to test middleware handling. 
     throw new Error("Intentional server error for testing.")
 }
 

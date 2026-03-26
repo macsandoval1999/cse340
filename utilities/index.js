@@ -47,7 +47,7 @@ Util.buildClassificationGrid = async function (data) { // defines an asynchronou
         data.forEach(vehicle => {
             grid += '<li>'
             grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-            grid += '<img src="' + vehicle.inv_thumbnail + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors" />'
+            grid += '<img src="' + vehicle.inv_thumbnail + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors">'
             grid += '</a>'
             grid += '<div class="namePrice">'
             grid += '<hr>'
@@ -84,7 +84,7 @@ Util.buildVehicleDetail = async function (vehicle) { // defines an asynchronous 
 
     let detail = '<section class="vehicle-detail">'
     detail += '<div class="vehicle-detail__media">'
-    detail += '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + '" />'
+    detail += '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + '">'
     detail += '</div>'
     detail += '<div class="vehicle-detail__info">'
     detail += '<h2>' + vehicle.inv_year + ' ' + vehicle.inv_make + ' ' + vehicle.inv_model + '</h2>'
