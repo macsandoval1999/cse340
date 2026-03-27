@@ -1,4 +1,6 @@
-/*******Universal Styles***************/
+/**********************************
+Universal Styles
+***********************************/
 *,
 *:before,
 *:after {
@@ -116,6 +118,33 @@ Error Page Styles
   margin-top: 1rem;
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.534);
+}
+
+
+
+/***********************************************
+Flash Notice Styles
+************************************************/
+.notice {
+  color: red;
+  font-size: 0.65rem;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.notice::before, .notice::after {
+  display: inline;
+  content: "**";
+}
+
+.notice li {
+  list-style: none;
+  display: inline;
+}
+
+.notice li::after, .notice li::before {
+  content: "_";
 }
 
 
