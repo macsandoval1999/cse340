@@ -9,7 +9,6 @@
 <% } else { res.redirect('/') } %>
 
 <%# Flash Messages %>
-<%# If there are messages, meaning the array returned by messages() is not empty, display them.%>
 <div class="flashBox"><%- messages() %></div>
 
 <form action="/account/login" method="POST" class="account-form">

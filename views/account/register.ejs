@@ -10,10 +10,7 @@
 
 
 <%# Flash Messages %>
-<%# If there are messages, meaning the array returned by messages() is not empty, display them.%>
-<% if (messages().length) { %>
-    <div class="flashBox"><%- messages() %></div>
-<% } %>
+<div class="flashBox"><%- messages() %></div>
 
 <form action="/account/register" method="POST" class="account-form">
     <fieldset>
