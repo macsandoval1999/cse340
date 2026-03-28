@@ -1,6 +1,10 @@
-<h1><%- messages() %></h1>
+<h1 class="pageTitle">Welcome to CSE Motors!</h1>
+
+<%# Flash Messages %>
+<%# messages() is provided by the connect-flash middleware and returns an array of flash messages. %>
+<div class="noticeContainer"><%- messages() %></div>
+
 <section class="hero">
-    <h2 id="hero-title">Welcome to CSE Motors!</h2>
     <div id="hero-message">
         <h3>DMC Delorean</h3>
         <ul class="hero-car-features">

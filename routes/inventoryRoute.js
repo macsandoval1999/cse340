@@ -28,4 +28,6 @@ router.get("/error", utilities.handleErrors(invController.triggerError))
 // invController.buildByClassification indicates the buildByClassification function within the invController will be used to fulfill the request sent by the route.
 
 
+
+// Export
 module.exports = router; // exports the router object, which contains the defined routes for inventory-related operations. This allows other parts of the application to import and use this router to handle requests related to inventory, such as displaying inventory items based on classification. By exporting the router, it can be easily integrated into the main application file (e.g., server.js) where it can be mounted to a specific path (e.g., "/inv") to organize the routes effectively.

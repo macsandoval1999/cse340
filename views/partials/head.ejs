@@ -11,9 +11,22 @@
     
     <link rel="icon" href="/images/site/favicon-32x32.png" type="image/png">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <%# extraLinks is a variable that can be set in individual views to include specific links for that page. If extraLinks is defined, it will be included here. %>
+    <% if (typeof extraLinks !== 'undefined') { %>
+        <%- extraLinks %> <%# The ejs tag here outputs the extraLinks variable without escaping HTML, allowing for the inclusion of link tags. %>
+    <% } %>
+
+    <%# pageScripts is a variable that can be set in individual views to include specific scripts for that page. If pageScripts is defined, it will be included here. %>
+    <% if (typeof pageScripts !== 'undefined') { %>
+        <%- pageScripts %> <%# The ejs tag here outputs the pageScripts variable without escaping HTML, allowing for the inclusion of script tags. %>
+    <% } %>
+
 </head>
 
 <%# 

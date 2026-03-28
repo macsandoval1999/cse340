@@ -94,11 +94,20 @@ main {
   min-height: 80vh;
 }
 
+.pageTitle, .accountTitle {
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
 
 
 /**********************************************
 Error Page Styles
 ***********************************************/
+
+
 
 .errorTitle {
   color: rgba(0, 0, 0, 0.534);
@@ -123,8 +132,11 @@ Error Page Styles
 
 
 /***********************************************
-Flash Notice Styles
+Flash Message Styles
 ************************************************/
+
+
+
 .notice {
   color: red;
   font-size: 0.65rem;
@@ -149,6 +161,118 @@ Flash Notice Styles
 
 
 
+/*********************************************
+Account Login Page Styles
+*********************************************/
+
+
+
+.accountTitle {
+  text-align: center;
+}
+
+.account-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+}
+
+.account-form fieldset {
+  border: none;
+  padding: 0;
+}
+
+.account-form legend {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.account-form label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+}
+
+.account-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.account-form button {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.account-form button:hover {
+  background: var(--accent-color);
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+
+.register-link a {
+  color: #0074d9;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.passwordBox {
+  position: relative;
+}
+
+#pswdBtn {
+  position: absolute;
+  bottom: 7.5px;
+  right: 0.5rem;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.534);
+  padding: 0 0.5rem 0 1rem;
+  background-color: white;
+}
+
+
+
+/**********************************************
+Account Registration Page Styles
+***********************************************/
+
+.password-requirements {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.534);
+  margin-bottom: 1.2rem;
+}
+
+.password-requirements li {
+   line-height: 1.4;
+   margin-left: 1.5rem;
+}
+
+
+
 /**********************************************
 Home Page Styles
 ***********************************************/
@@ -158,13 +282,6 @@ Home Page Styles
 .hero {
   position: relative;
   padding: 20px 5px;
-}
-
-#hero-title {
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 2rem;
-  font-size: 1.2rem;
 }
 
 .hero img {
@@ -271,17 +388,10 @@ Home Page Styles
 
 
 /**********************************************
-Inventory Page Styles
+Inventory Classification Page Styles
 ***********************************************/
 
 
-
-.vehicleTitle {
-  color: var(--primary-color);
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
 
 #inv-display {
   display: grid;
@@ -336,9 +446,8 @@ Inventory Page Styles
 
 
 
-
 /**********************************************
-Vehicle Detail Page Styles
+Inventory Detail Page Styles
 ***********************************************/
 
 
@@ -372,6 +481,7 @@ Vehicle Detail Page Styles
 .vehicle-detail__info p {
   margin-bottom: 0.5rem;
 }
+
 
 
 /**********************************************
@@ -427,8 +537,8 @@ Media Queries
     font-size: 1rem;
   }
 
-  .vehicleTitle {
-    font-size: 1.5rem;
+  .pageTitle, .accountTitle {
+    font-size: 2rem;
   }
 }
 

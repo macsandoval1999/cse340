@@ -1,0 +1,43 @@
+<%# Scripts specific to the login page. This variable will be included in the head partial, allowing us to include page-specific scripts when needed. %>
+<% pageScripts = '<script src="/js/login.js" type="module"></script>' %>
+
+<%# The Content Heading %>
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%# Flash Messages %>
+<%# If there are messages, meaning the array returned by messages() is not empty, display them.%>
+<% if (messages().length) { %>
+    <div class="noticeContainer"><%- messages() %></div>
+<% } %>
+
+<form action="/account/login" method="POST" class="account-form">
+    <fieldset>
+        <legend>Login to continue</legend>
+
+        <label>Email
+            <input type="email" name="email" id="email" required autocomplete="email" title="Your Email Address">
+        </label>
+
+        <label for="password" class="passwordBox">Password
+            <input type="password" id="password" name="password" title="Your Password" required>
+            <span id="pswdBtn" class="toggle-password"><i id="pswdIcon" class="fa-solid fa-eye"></i></span>
+        </label>
+      
+
+        <button type="submit">Continue</button>
+    </fieldset>
+
+    <div class="register-link">
+        <p>Don't have an account? <a href="/account/register">Register here</a>.</p>
+    </div>
+
+</form>
+
+
+
+
+
