@@ -12,7 +12,7 @@
 <%# Flash Messages %>
 <%# If there are messages, meaning the array returned by messages() is not empty, display them.%>
 <% if (messages().length) { %>
-    <div class="noticeContainer"><%- messages() %></div>
+    <div class="flashBox"><%- messages() %></div>
 <% } %>
 
 <form action="/account/register" method="POST" class="account-form">
@@ -20,19 +20,19 @@
         <legend>Create Your Account</legend>
 
         <label for="firstName">First Name
-            <input type="text" id="firstName" name="firstName" required autocomplete="given-name" title="Your First Name">
+            <input type="text" id="firstName" name="account_firstname" required autocomplete="given-name" title="Your First Name">
         </label>
 
         <label for="lastName">Last Name
-            <input type="text" id="lastName" name="lastName" required autocomplete="family-name" title="Your Last Name">
+            <input type="text" id="lastName" name="account_lastname" required autocomplete="family-name" title="Your Last Name">
         </label>
 
         <label for="email">Email
-            <input type="email" id="email" name="email" required autocomplete="email" title="Your Email Address">
+            <input type="email" id="email" name="account_email" required autocomplete="email" title="Your Email Address">
         </label>
 
         <label for="password" class="passwordBox">Password
-            <input type="password" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$" title="Password must be at least 12 characters, include an uppercase letter, a number, and a special character." required>
+            <input type="password" id="password" name="account_password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$" title="Password must be at least 12 characters, include an uppercase letter, a number, and a special character." required>
             <span id="pswdBtn" class="toggle-password"><i id="pswdIcon" class="fa-solid fa-eye"></i></span>            
         </label>
 

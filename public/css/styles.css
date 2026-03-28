@@ -137,29 +137,39 @@ Flash Message Styles
 
 
 
-.notice {
-  color: red;
+.flashNotice, .flashError, .flashSuccess {
   font-size: 0.65rem;
-  border: 1px solid red;
-  border-radius: 5px;
   padding: 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
 }
 
-.notice::before, .notice::after {
+.flashNotice::before, .flashNotice::after,
+.flashError::before, .flashError::after,
+.flashSuccess::before, .flashSuccess::after {
   display: inline;
   content: "**";
 }
 
-.notice li {
+.flashNotice li, .flashError li, .flashSuccess li {
   list-style: none;
   display: inline;
 }
 
-.notice li::after, .notice li::before {
-  content: "_";
+.flashNotice {
+  color:#5f5f5f;
+  border-color: #5f5f5f;
 }
 
+.flashError {
+  color: rgb(255, 0, 0);
+  border-color: rgb(255, 0, 0);
+}
 
+.flashSuccess {
+  color: rgb(15, 190, 15);
+  border-color: rgb(15, 190, 15);
+}
 
 /*********************************************
 Account Login Page Styles

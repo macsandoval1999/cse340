@@ -24,14 +24,14 @@ const accController = require('../controllers/accController') // This line impor
 
 // Needed Routes
 /******************************
-This section defines the routes for account-related operations. It includes a route for displaying the login page when a GET request is made to "/login". The route uses the "buildLogin" function from the account controller to handle the request and render the appropriate view for the user to log in. The route is wrapped with error handling utilities to ensure that any errors that occur during the request handling are properly managed and do not crash the application.
+This section defines the routes for handling account-related requests. It includes a route for displaying the login page when a GET request is made to "/login". The route uses the "buildLogin" function from the account controller to handle the request and render the login view for the user. Each route is wrapped with an error-handling utility to ensure that any errors that occur during the processing of the request are properly handled and do not crash the application. This setup allows users to access the login page and other account-related pages as defined by the routes in this section. 
 *******************************/
 
 router.get('/login', utilities.handleErrors(accController.buildLogin)) // This defines a route for handling GET requests to the URL pattern "/login". When a request matches this pattern, the "buildLogin" function from the account controller is called to handle the request and render the login view for the user.')
 
 router.get('/register', utilities.handleErrors(accController.buildRegister)) // This defines a route for handling GET requests to the URL pattern "/register". When a request matches this pattern, the "buildRegister" function from the account controller is called to handle the request and render the registration view for the user.')
 
-
+router.post('/register', utilities.handleErrors(accController.registerAccount)) // This defines a route for handling POST requests to the URL pattern "/register". When a request matches this pattern, the "registerAccount" function from the account controller is called to handle the request, which typically involves processing the registration form data and creating a new user account in the system.')
 
 
 // Export

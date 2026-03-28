@@ -32,6 +32,8 @@ const session = require("express-session") // imports the express-session packag
 
 const pool = require("./database/") // imports the database module, which likely contains the configuration and connection setup for the application's database. This allows the application to interact with the database for storing and retrieving data as needed for various operations, such as managing inventory items or user information.
 
+const bodyParser = require("body-parser") // imports the body-parser package, which is a middleware for parsing incoming request bodies in an Express application. It allows the application to handle data sent in the body of HTTP requests, such as form submissions or JSON payloads, making it easier to access and process this data in route handlers.
+
 
 
 /****************************
@@ -58,6 +60,9 @@ app.use(function (req, res, next) { // This is a custom middleware function that
     next() // This line calls the next() function to pass control to the next middleware function in the stack. This is important to ensure that the request continues processing and does not get stuck in this middleware. By calling next(), we allow the application to continue handling the request and eventually reach the appropriate route handler or error handler based on the defined routes and middleware in the application. Ultimately, this allows messages to be set, then pass on to the next process. Eventually, when a view is built, the message can be displayed in it.
 })
 
+app.use(bodyParser.json()) // This line sets up the body-parser middleware to parse incoming request bodies in JSON format. This allows the application to handle data sent in the body of HTTP requests, such as JSON payloads, making it easier to access and process this data in route handlers. By using bodyParser.json(), we can easily work with JSON data sent from the client, allowing for more flexible and dynamic interactions with the application.
+
+app.use(bodyParser.urlencoded({ extended: true })) // This line sets up the body-parser middleware to parse incoming request bodies in URL-encoded format. This allows the application to handle data sent in the body of HTTP requests, such as form submissions, making it easier to access and process this data in route handlers. By using bodyParser.urlencoded({ extended: true }), we can easily work with URL-encoded data sent from the client, allowing for more flexible and dynamic interactions with the application, especially when handling form data.
 
 
 

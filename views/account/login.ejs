@@ -10,20 +10,18 @@
 
 <%# Flash Messages %>
 <%# If there are messages, meaning the array returned by messages() is not empty, display them.%>
-<% if (messages().length) { %>
-    <div class="noticeContainer"><%- messages() %></div>
-<% } %>
+<div class="flashBox"><%- messages() %></div>
 
 <form action="/account/login" method="POST" class="account-form">
     <fieldset>
         <legend>Login to continue</legend>
 
-        <label>Email
-            <input type="email" name="email" id="email" required autocomplete="email" title="Your Email Address">
+        <label for="email">Email
+            <input type="email" id="email" name="account_email" required autocomplete="email" title="Your Email Address">
         </label>
 
         <label for="password" class="passwordBox">Password
-            <input type="password" id="password" name="password" title="Your Password" required>
+            <input type="password" id="password" name="account_password" title="Your Password" required>
             <span id="pswdBtn" class="toggle-password"><i id="pswdIcon" class="fa-solid fa-eye"></i></span>
         </label>
       
