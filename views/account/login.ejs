@@ -11,7 +11,7 @@
 <%# Flash Messages %>
 <div class="flashBox"><%- messages() %></div>
 
-<form action="/account/login" method="POST" class="account-form">
+<form id="loginForm" action="/account/login" method="POST" class="account-form">
     <fieldset>
         <legend>Login to continue</legend>
 
@@ -20,10 +20,17 @@
         </label>
 
         <label for="password" class="passwordBox">Password
-            <input type="password" id="password" name="account_password" title="Your Password" required>
+            <input type="password" id="password" name="account_password" title="Your Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
             <span id="pswdBtn" class="toggle-password"><i id="pswdIcon" class="fa-solid fa-eye"></i></span>
         </label>
-      
+        <div class="password-requirements">
+            <p>Password must be at least 12 characters long and include:</p>
+            <ul>
+                <li>At least one uppercase letter</li>
+                <li>At least one number</li>
+                <li>At least one special character</li>
+            </ul>
+        </div>
 
         <button type="submit">Continue</button>
     </fieldset>

@@ -60,13 +60,16 @@ async function registerAccount(req, res) { // defines an asynchronous function n
         res.status(201).render("account/login", { // renders the login view with a success message after successful registration. The status code 201 indicates that a new resource (the user account) has been successfully created. The "account/login" view is rendered with a title of "Login" and the navigation data, allowing the user to proceed to the login page after registering.
             title: "Login", // sets the title to "Login" for the view template, which can be used to display the appropriate title on the login page.
             nav, // passes the navigation data to the view template, allowing it to render the navigation links based on the application's configuration. This ensures that the user has access to the appropriate navigation options when they are on the login page.
+            errors: null, // sets the "errors" variable to null, which can be used in the view template to conditionally display error messages if there were any issues during the registration process. In this case, since the registration was successful, there are no errors to display, so it is set to null.
         }) 
     } else { // if the registration result is falsy, it indicates that there was an error during the registration process. In this case, it sets an error flash message to inform the user that there was an issue with the registration and prompts them to try again. It then re-renders the registration view with a status code of 501, which indicates that the server encountered an error while processing the request. The "account/register" view is rendered with a title of "Register" and the navigation data, allowing the user to attempt registration again.
         req.flash("flashError", "Sorry, there was an error with the registration process. Please try again.")
         res.status(501).render("account/register", {
             title: "Register",
             nav,
+            errors: null, // sets the "errors" variable to null, which can be used in the view template to conditionally display error messages if there were any issues during the registration process. In this case, since there was an error, it is set to null, but the flash message will inform the user of the issue and prompt them to try again.
         })
+        
     }
 }
     

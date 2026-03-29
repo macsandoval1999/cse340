@@ -20,6 +20,8 @@ const utilities = require('../utilities')
 
 const accController = require('../controllers/accController') // This line imports the account controller from the controllers folder, which is one level above the current file. This allows the functions defined in the account controller to be used as route handlers for incoming requests related to account operations, such as displaying the login page or handling user authentication.
 
+const regValidate = require('../utilities/account-validation')
+
 
 
 // Needed Routes
@@ -31,7 +33,10 @@ router.get('/login', utilities.handleErrors(accController.buildLogin)) // This d
 
 router.get('/register', utilities.handleErrors(accController.buildRegister)) // This defines a route for handling GET requests to the URL pattern "/register". When a request matches this pattern, the "buildRegister" function from the account controller is called to handle the request and render the registration view for the user.')
 
-router.post('/register', utilities.handleErrors(accController.registerAccount)) // This defines a route for handling POST requests to the URL pattern "/register". When a request matches this pattern, the "registerAccount" function from the account controller is called to handle the request, which typically involves processing the registration form data and creating a new user account in the system.')
+router.post('/register', // This defines a route for handling POST requests to the URL pattern "/register". When a request matches this pattern, the "registerAccount" function from the account controller is called to handle the request, which typically involves processing the registration form data and creating a new user account in the system. The route is wrapped with an error-handling utility to ensure that any errors that occur during the processing of the registration request are properly handled and do not crash the application.
+    regValidate.registrationRules(), // This middleware function applies the registration validation rules defined in the "registrationRules" function from the account validation utility. It checks the incoming registration data against the defined validation criteria (e.g., required fields, email format, password strength) before allowing the request to proceed to the next middleware or controller function. If the validation fails, it will typically return an error response or render the registration view with error messages, prompting the user to correct their input.
+    regValidate.checkRegData, // This middleware function checks the results of the registration validation performed by the previous middleware. It evaluates whether there were any validation errors and, if so, it typically returns an error response or re-renders the registration view with error messages to inform the user of the issues with their input. If there are no validation errors, it allows the request to proceed to the next middleware or controller function, which in this case is the "registerAccount" function from the account controller that handles the actual registration logic.
+    utilities.handleErrors(accController.registerAccount)) // This is the final handler for the POST request to "/register". It calls the "registerAccount" function from the account controller to process the registration form data and create a new user account. The route is wrapped with an error-handling utility to ensure that any errors that occur during the registration process are properly handled and do not crash the application. If the registration is successful, it typically redirects the user to a login page or displays a success message. If there are errors during registration (e.g., database issues, validation failures), it will handle those errors gracefully and inform the user accordingly.
 
 
 // Export

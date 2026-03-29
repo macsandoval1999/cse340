@@ -30,6 +30,7 @@ invController.buildByClassificationId = async function (req, res, next) { // def
         title: className + " vehicles",
         nav,
         grid,
+        errors: null,
     })
 }
 
@@ -50,6 +51,7 @@ invController.buildByInventoryId = async function (req, res, next) { // defines 
         title,
         nav,
         detail,
+        errors: null,
     })
 }
 

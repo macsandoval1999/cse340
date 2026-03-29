@@ -142,6 +142,7 @@ Flash Message Styles
   padding: 5px;
   border: 1px solid transparent;
   border-radius: 5px;
+  list-style: none;
 }
 
 .flashNotice::before, .flashNotice::after,
@@ -152,7 +153,6 @@ Flash Message Styles
 }
 
 .flashNotice li, .flashError li, .flashSuccess li {
-  list-style: none;
   display: inline;
 }
 
@@ -169,6 +169,11 @@ Flash Message Styles
 .flashSuccess {
   color: rgb(15, 190, 15);
   border-color: rgb(15, 190, 15);
+}
+
+
+.flashError:nth-child(odd) {
+  display: none /* Hides the "invalid value error the shows before the actual error message */;
 }
 
 /*********************************************
@@ -262,6 +267,15 @@ Account Login Page Styles
   color: rgba(0, 0, 0, 0.534);
   padding: 0 0.5rem 0 1rem;
   background-color: white;
+}
+
+input:required:invalid,
+input:focus:invalid {
+  border-color: red;
+}
+
+input:required:valid {
+  border-color: green;
 }
 
 

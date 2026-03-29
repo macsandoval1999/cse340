@@ -10,7 +10,13 @@
 
 
 <%# Flash Messages %>
-<div class="flashBox"><%- messages() %></div>
+<% if (errors) { %>
+    <ul class="flashBox">
+        <% errors.array().forEach(error => { %>
+            <li class="flashError"><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
 
 <form action="/account/register" method="POST" class="account-form">
     <fieldset>
@@ -29,7 +35,7 @@
         </label>
 
         <label for="password" class="passwordBox">Password
-            <input type="password" id="password" name="account_password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$" title="Password must be at least 12 characters, include an uppercase letter, a number, and a special character." required>
+            <input type="password" id="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" title="Password must be at least 12 characters, include an uppercase letter, a number, and a special character." required>
             <span id="pswdBtn" class="toggle-password"><i id="pswdIcon" class="fa-solid fa-eye"></i></span>            
         </label>
 
