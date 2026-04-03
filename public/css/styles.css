@@ -555,6 +555,10 @@ Inventory Detail Page Styles
 .vehicle-detail__info h2 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.11);
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem;
+  border-bottom: 5px solid var(--accent-color);
 }
 
 .vehicle-detail__price,
@@ -563,8 +567,18 @@ Inventory Detail Page Styles
   margin-bottom: 0.5rem;
 }
 
+.vehicle-detail__info {
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  border-radius: 5px;
+}
+
 .vehicle-detail__info p {
   margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+
+.vehicle-detail__info p:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 
@@ -651,7 +665,8 @@ Media Queries
 
   .vehicle-detail {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 24px;
   }
 
