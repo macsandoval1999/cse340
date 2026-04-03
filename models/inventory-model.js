@@ -1,49 +1,104 @@
 // inventory-model.js
 /**************************************
-Our inventory-model.js document is where we'll write all the functions to interact with the classification and inventory tables of the database, since they are integral to our inventory.
-This file is responsible for defining the functions that interact with the database to retrieve inventory-related data. It imports the database connection pool from the "database/index.js" file and defines an asynchronous function called "getClassifications" that executes a SQL query to retrieve all classification data from the "classification" table in the database, ordered by the classification name. The function returns the result of the query, which can be used by other parts of the application to display or manipulate inventory data.
+ * Inventory Model
+ * Contains functions to interact with the database for inventory-related operations such as adding classifications, adding inventory items, and retrieving classifications and inventory data
+ * These functions use SQL queries to perform the necessary operations and return the results to the controllers that call them.
+ * This object is exported and used in the inventory controller to perform database operations related to inventory management.
+ * It is also used in the utilities module to build navigation and classification lists based on the data retrieved from the database.
 ***************************************/
 
 
 
-// Needed Resources
-/***********************
-This section imports the database connection pool from the "database/index.js" file. This allows the functions defined in this file to execute SQL queries against the database using the established connection pool, which manages multiple connections efficiently for handling concurrent database interactions.
-***********************/
+/** Import Needed Resources **/
 
-const pool = require("../database/") // imports the database connection file (named index.js) from the database folder which is one level above the current file. Because the file is index.js, it is the default file, and will be located inside the database folder without being specified. The path could also be ../database/index.js. It would return the same result. This allows the functions defined in this file to execute SQL queries against the database using the established connection pool, which manages multiple connections efficiently for handling concurrent database interactions.
+// Import the database connection pool to interact with the PostgreSQL database for inventory-related operations
+const pool = require("../database/")
 
 
-
-//Model functions
-/**********************************
- This section defines the model functions that interact with the database to retrieve inventory-related data. The "getClassifications" function is an asynchronous function that executes a SQL query to retrieve all classification data from the "classification" table in the database, ordered by the classification name. The function returns the result of the query, which can be used by other parts of the application to display or manipulate inventory data. Additional functions for retrieving inventory items by classification ID or inventory ID can also be defined in this section as needed.
-***********************************/
+// Inventory Data Access Functions
+/***********************************
+ These functions interact with the database to perform operations such as adding classifications, adding inventory items, and retrieving classifications and inventory data. They use SQL queries to perform these operations and return the results to the controllers that call them.
+************************************/
 
 // Get all classification data
-async function getClassifications() { // defines an asynchronous function named "getClassifications" that retrieves all classification data from the database. Remember what asynchronous functions do: they allow the function to perform asynchronous operations, such as database queries, without blocking the execution of other code. This function uses the connection pool to execute a SQL query that selects all records from the "classification" table and orders them by the "classification_name" column. The result of the query is returned, which can be used by other parts of the application to display or manipulate inventory data.
-    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name") // Notice the two keywords: return and await. Await is part of the Async - Await promise structure introduced in ES6. Return is an Express keyword, indicating that the data should be sent to the code location that called the function originally.
+async function addClassification(classification_name) {
+    try {
+        const result = await pool.query(
+            // SQL query to insert a new classification into the database, returning the newly created classification
+            "INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *",
+            [classification_name]
+        )
+        return result.rows[0]
+    } catch (error) {
+        console.error("addClassification error: " + error)
+        return null
+    }
+}
+
+// Add Inventory
+async function addInventory(
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color
+) {
+    try { 
+        // SQL query to insert a new inventory item into the database, returning the newly created item
+        const sql = `INSERT INTO public.inventory
+            (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
+        const result = await pool.query(sql, [
+            classification_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_miles,
+            inv_color,
+        ])
+        return result.rows[0]
+    } catch (error) {
+        console.error("addInventory error: " + error)
+        return null
+    }
+}
+
+// Get all classification data
+async function getClassifications() { 
+    // SQL query to select all classifications from the database, ordered by classification name
+    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name") 
 }
 
 //Get all inventory items and classification_name by classification_id
-async function getInventoryByClassificationId(classification_id) {  // defines an asynchronous function named "getInventoryByClassificationId" that retrieves all inventory items and their associated classification names based on a given classification ID. The function takes a single parameter, "classification_id", which is used to filter the inventory items in the database query. The function executes a SQL query that joins the "inventory" and "classification" tables to retrieve the relevant data, and returns the result as an array of rows. If an error occurs during the database query, it is caught and logged to the console.
+async function getInventoryByClassificationId(classification_id) {  
     try {
-        const data = await pool.query( // uses the connection pool to execute a SQL query against the database. The query retrieves all inventory items and their associated classification names by using and inner join and joining the "inventory" and "classification" tables based on the provided classification ID. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The result of the query is stored in the "data" variable, which can then be returned as an array of rows containing the inventory items and their classifications. The query uses a parameterized query with "$1" to safely insert the classification ID into the SQL statement, preventing SQL injection attacks. The "$1" is a placeholder, which will be replaced by the value shown in the brackets "[]" when the SQL statement is run.
+        // SQL query to select all inventory items that belong to a specific classification, joining the inventory and classification tables to also retrieve the classification name
+        const data = await pool.query( 
             `SELECT * FROM public.inventory AS i
             JOIN public.classification AS c
             ON i.classification_id = c.classification_id
             WHERE i.classification_id = $1`,
-            [classification_id] // the second argument is an array of parameters that corresponds to the placeholders in the SQL query. In this case, it contains the "classification_id" that will be used to filter the inventory items based on their classification.
+            [classification_id] 
         )
-        return data.rows // returns the "rows" property of the query result, which contains an array of objects representing the inventory items and their associated classification names that match the specified classification ID. This allows other parts of the application to access and use this data for rendering views or performing further operations.
+        return data.rows 
     } catch (error) {
         console.error("getInventoryByClassificationId error: " + error)
     }
 }
 
 // Get a specific inventory item by inv_id
-async function getInventoryById(inv_id) { // defines an asynchronous function named "getInventoryById" that retrieves a single inventory item based on the inventory id. This is used to build the detail view for a single vehicle.
-    try { // uses the connection pool to execute a SQL query against the database. The query retrieves a specific inventory item by joining the "inventory" and "classification" tables based on the provided inventory ID. The "await" keyword is used to wait for the asynchronous operation to complete before proceeding. The result of the query is stored in the "data" variable, which can then be returned as an object representing the inventory item and its associated classification name. The query uses a parameterized query with "$1" to safely insert the inventory ID into the SQL statement, preventing SQL injection attacks. The "$1" is a placeholder, which will be replaced by the value shown in the brackets "[]" when the SQL statement is run. The function returns the first row of the result, which should contain the details of the specific inventory item. If an error occurs during the database query, it is caught and logged to the console.
+async function getInventoryById(inv_id) {
+    try {
+        // SQL query to select a specific inventory item by its ID, joining the inventory and classification tables to also retrieve the classification name
         const data = await pool.query(
             `SELECT * FROM public.inventory AS i
             JOIN public.classification AS c
@@ -51,7 +106,7 @@ async function getInventoryById(inv_id) { // defines an asynchronous function na
             WHERE i.inv_id = $1`,
             [inv_id]
         )
-        return data.rows[0] // returns the first row of the query result, which should contain the details of the specific inventory item that matches the provided inventory ID. This allows other parts of the application to access and use this data for rendering the detail view of the inventory item or performing further operations.
+        return data.rows[0] 
     } catch (error) {
         console.error("getInventoryById error: " + error)
     }
@@ -59,8 +114,5 @@ async function getInventoryById(inv_id) { // defines an asynchronous function na
 
 
 
-// Export
-/******************************
-This section exports the functions defined in this file, allowing other parts of the application to import and use them to retrieve classification data and inventory items by classification ID or inventory ID from the database when needed. By exporting these functions, they can be easily integrated into controllers or routes that require access to inventory-related data for rendering views or handling business logic.
-*******************************/
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById } // exports an object that contains the "getClassifications" and "getInventoryByClassificationId" functions. This allows other parts of the application to import and use these functions to retrieve classification data and inventory items by classification ID from the database when needed.
+// Export the functions to be used in other parts of the application
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory } 

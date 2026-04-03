@@ -1,0 +1,32 @@
+<%# The Content Heading %>
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%# Flash Messages %>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="flashBox">
+        <% errors.array().forEach(error => { %>
+            <% if (error.msg !== 'Invalid value') { %>
+                <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<form action="/inv/add-classification" method="POST" class="account-form classification-form">
+    <fieldset>
+        <legend>Create a New Classification</legend>
+
+        <label for="classification_name">Classification Name
+            <input type="text" id="classification_name" name="classification_name" required pattern="^[A-Za-z]+$" title="Classification name must contain letters only. No spaces or special characters are allowed." value="<%= locals.classification_name %>">
+        </label>
+
+        <p>Use letters only. Spaces, numbers, and special characters are not allowed.</p>
+
+        <button type="submit">Add Classification</button>
+    </fieldset>
+</form>

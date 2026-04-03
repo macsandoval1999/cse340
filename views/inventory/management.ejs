@@ -1,0 +1,27 @@
+<%# The Content Heading %>
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%# Flash Messages %>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="flashBox">
+        <% errors.array().forEach(error => { %>
+            <% if (error.msg !== 'Invalid value') { %>
+                <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<section class="inventory-management">
+    <h2>Manage Your Inventory</h2>
+    <p>Welcome to the inventory management page. Here you can add a new class of vehicles, and new vehicles as well!</p>
+    <ul class="inventory-management-links">
+        <li><a href="/inv/add-classification">Add a New Classification</a></li>
+        <li><a href="/inv/add-inventory">Add a New Vehicle</a></li>
+    </ul>
+</section>

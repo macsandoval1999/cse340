@@ -9,6 +9,16 @@
 <% } else { res.redirect('/') } %>
 
 <%# Flash Messages %>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="flashBox">
+        <% errors.array().forEach(error=> { %>
+           <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+        <% }) %>
+    </ul>
+<% } %>
+
 <div class="flashBox"><%- messages() %></div>
 
 <form id="loginForm" action="/account/login" method="POST" class="account-form">
@@ -16,7 +26,7 @@
         <legend>Login to continue</legend>
 
         <label for="email">Email
-            <input type="email" id="email" name="account_email" required autocomplete="email" title="Your Email Address">
+            <input type="email" id="email" name="account_email" required autocomplete="email" title="Your Email Address" value="<%= locals.account_email %>">
         </label>
 
         <label for="password" class="passwordBox">Password
@@ -36,7 +46,7 @@
     </fieldset>
 
     <div class="register-link">
-        <p>Don't have an account? <a href="/account/register">Register here</a>.</p>
+        <p>Don't have an account? <a href="/account/registration">Register here</a>.</p>
     </div>
 
 </form>

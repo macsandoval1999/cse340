@@ -1,6 +1,7 @@
 /**********************************
 Universal Styles
 ***********************************/
+
 *,
 *:before,
 *:after {
@@ -60,19 +61,26 @@ nav {
 nav ul {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
 }
 
 nav li {
-  margin: 0 10px;
+  margin: 5px 5px;
   color: var(--secondary-color);
+  width: fit-content;
 }
 
 nav a {
   text-decoration: none;
   color: var(--secondary-color);
   font-size: 0.7rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 nav a::after {
@@ -82,6 +90,7 @@ nav a::after {
   height: 2px;
   background-color: var(--accent-color);
   transition: width 0.3s ease;
+  margin: 0 auto;
 }
 
 nav a:hover::after {
@@ -106,8 +115,6 @@ main {
 /**********************************************
 Error Page Styles
 ***********************************************/
-
-
 
 .errorTitle {
   color: rgba(0, 0, 0, 0.534);
@@ -135,52 +142,34 @@ Error Page Styles
 Flash Message Styles
 ************************************************/
 
-
-
-.flashNotice, .flashError, .flashSuccess {
-  font-size: 0.65rem;
+.flashMessage {
+  width: 100%;
   padding: 5px;
-  border: 1px solid transparent;
+  border: 1px solid rgb(255, 0, 0);
   border-radius: 5px;
-  list-style: none;
 }
 
-.flashNotice::before, .flashNotice::after,
-.flashError::before, .flashError::after,
-.flashSuccess::before, .flashSuccess::after {
-  display: inline;
-  content: "**";
+.notice, .success {
+  font-size: 0.65rem;
+  border-radius: 5px;
+  margin-left: 1.5rem;
 }
 
-.flashNotice li, .flashError li, .flashSuccess li {
-  display: inline;
-}
-
-.flashNotice {
-  color:#5f5f5f;
-  border-color: #5f5f5f;
-}
-
-.flashError {
+.notice {
   color: rgb(255, 0, 0);
   border-color: rgb(255, 0, 0);
 }
 
-.flashSuccess {
+.success {
   color: rgb(15, 190, 15);
-  border-color: rgb(15, 190, 15);
 }
 
 
-.flashError:nth-child(odd) {
-  display: none /* Hides the "invalid value error the shows before the actual error message */;
-}
+
 
 /*********************************************
 Account Login Page Styles
 *********************************************/
-
-
 
 .accountTitle {
   text-align: center;
@@ -220,6 +209,22 @@ Account Login Page Styles
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+.account-form select,
+.account-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.account-form textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .account-form button {
@@ -300,8 +305,6 @@ Account Registration Page Styles
 /**********************************************
 Home Page Styles
 ***********************************************/
-
-
 
 .hero {
   position: relative;
@@ -411,11 +414,71 @@ Home Page Styles
 
 
 
+/*********************************************
+Inventory Management Page Styles
+*********************************************/
+.inventory-management {
+  margin: 1.5rem auto;
+  max-width: 400px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.295);
+  border-radius: 5px;
+}
+
+.inventory-management h2 {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px 5px 0 0;
+}
+
+.inventory-management p {
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.inventory-management ul {
+  list-style: none;
+  padding: 1rem 1rem 1rem 2rem;
+}
+
+.inventory-management li {
+  margin-bottom: 1rem;
+}
+
+.inventory-management a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.inventory-management a:hover {
+  text-decoration: underline;
+}
+
+
+
+/*********************************************
+Add Classification Page Styles
+*********************************************/
+
+.classification-form p, .inventory-form p{
+  padding-bottom: 1rem;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+
+
+/***********************************************
+Add Inventory Page Styles
+************************************************/
+
+
+
 /**********************************************
 Inventory Classification Page Styles
 ***********************************************/
-
-
 
 #inv-display {
   display: grid;
@@ -474,8 +537,6 @@ Inventory Classification Page Styles
 Inventory Detail Page Styles
 ***********************************************/
 
-
-
 .vehicle-detail {
   background-color: var(--secondary-color);
   padding: 20px 5px;
@@ -512,8 +573,6 @@ Inventory Detail Page Styles
 Footer Styles
 ***********************************************/
 
-
-
 footer {
   background-color: var(--primary-color);
   color: var(--secondary-color);
@@ -533,8 +592,6 @@ footer a {
 /**********************************************
 Media Queries
 ***********************************************/
-
-
 
 @media screen and (min-width: 450px) {
   #hero-title {
