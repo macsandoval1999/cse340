@@ -27,6 +27,8 @@ const pool = require("./database/")
 
 const bodyParser = require("body-parser") 
 
+const cookieParser = require("cookie-parser")
+
 
 
 // The Express application instance
@@ -68,6 +70,9 @@ app.use(bodyParser.json())
 
 // Middleware to parse URL-encoded data from forms
 app.use(bodyParser.urlencoded({ extended: true }))   
+
+// Middleware to parse cookies from incoming requests
+app.use(cookieParser())
 
 
 

@@ -33,7 +33,7 @@ const router = new express.Router()
 router.get('/login', utilities.handleErrors(accountController.buildLogin)) 
 
 // Process the login attempt
-router.post('/login', regValidate.loginRules(), regValidate.checkRegData, utilities.handleErrors(accountController.buildLogin)) 
+router.post('/login', regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin)) 
 
 // Display registration view
 router.get('/registration', utilities.handleErrors(accountController.buildRegistration)) //

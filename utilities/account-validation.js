@@ -127,23 +127,21 @@ validate.loginRules = () => {
     ]
 }
 // CHECKER: Check login form data and return errors if validation rules are not met
-validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body 
-    let errors = [] 
-    errors = validationResult(req) 
-    if (!errors.isEmpty()) { 
-        let nav = await utilities.getNav() 
-        res.render("account/registration", { 
-            errors, 
-            title: "Registration",
+validate.checkLoginData = async (req, res, next) => {
+    const { account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render('account/login', {
+            errors,
+            title: 'Login',
             nav,
-            account_firstname,
-            account_lastname,
             account_email,
         })
-        return 
+        return
     }
-    next() 
+    next()
 }
 
 
