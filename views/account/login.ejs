@@ -9,19 +9,16 @@
 <% } else { res.redirect('/') } %>
 
 <%# Flash Messages %>
-<%- messages() %> 
-
+<%- messages() %>
 <% if (errors) { %>
-    <ul class="flashBox">
+    <ul class="notice flashBox">
         <% errors.array().forEach(error => { %>
             <% if (error.msg !== 'Invalid value') { %>
-                <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+                <li><%= error.msg %></li>
             <% } %>
         <% }) %>
     </ul>
 <% } %>
-
-<div class="flashBox"><%- messages() %></div>
 
 <form id="loginForm" action="/account/login" method="POST" class="account-form">
     <fieldset>

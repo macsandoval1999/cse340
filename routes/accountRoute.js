@@ -29,6 +29,9 @@ const express = require('express')
  **********************/
 const router = new express.Router()
 
+// Route to deliver the account management view
+router.get('/', utilities.handleErrors(accountController.buildManagement))
+
 // Deliver the login view
 router.get('/login', utilities.handleErrors(accountController.buildLogin)) 
 
@@ -36,7 +39,7 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin))
 router.post('/login', regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin)) 
 
 // Display registration view
-router.get('/registration', utilities.handleErrors(accountController.buildRegistration)) //
+router.get('/registration', utilities.handleErrors(accountController.buildRegistration)) 
 
 // Process the registration attempt
 router.post('/registration', 

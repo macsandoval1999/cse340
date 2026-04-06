@@ -74,6 +74,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Middleware to parse cookies from incoming requests
 app.use(cookieParser())
 
+// Middleware to check for a valid JWT token in incoming requests, which is used for authentication and authorization purposes. This middleware will run for every request and will verify the token if it is present, allowing access to protected routes if the token is valid.
+app.use(utilities.checkJWTToken)
+
 
 
 // View Engine and Templates
@@ -114,16 +117,11 @@ app.use(async (req, res, next) => {
     next({ status: 404, message: 'Sorry, the page you requested was not found.' })   
 })
 
-
-
-// Express Error Handler
-/*************************
-This
-*************************/
-
+// Express Error Handling Middleware
 app.use(async (err, req, res, next) => { 
     let nav = await utilities.getNav() 
-    console.error(`Error at: "${req.originalUrl}": ${err.message}`) 
+    let message
+    console.error(`Error at: "${req.originalUrl}": ${err.message}`)
     if (err.status == 404) { 
         message = err.message
     } else {
@@ -138,14 +136,11 @@ app.use(async (err, req, res, next) => {
 
 
 
-
+// Local Server Information 
 const port = process.env.PORT 
-
 const host = process.env.HOST 
 
-
-
-
+// Start the server and listen for incoming requests
 app.listen(port, () => { 
     console.log(`app listening on http://${host}:${port}`)
 })

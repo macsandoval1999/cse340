@@ -53,6 +53,17 @@ accountController.buildRegistration = async function (req, res, next) {
     })
 }
 
+// Deliver account management view
+accountController.buildManagement = async function (req, res, next) { 
+    const account_id = res.locals.accountData?.account_id ? parseInt(res.locals.accountData.account_id) : null
+    let nav = await utilities.getNav()
+    res.render("account/management", { 
+        title: "Account Management",
+        nav,
+        errors: null,
+    })
+}
+
 // Process Registration Request
 accountController.registerAccount = async function (req, res) { 
     let nav = await utilities.getNav() 
@@ -99,7 +110,7 @@ accountController.registerAccount = async function (req, res) {
 }
 
 // Process Login Request
-async function accountLogin(req, res) {
+accountController.accountLogin = async function (req, res) {
     let nav = await utilities.getNav()
     const { account_email, account_password } = req.body
     const accountData = await accountModel.getAccountByEmail(account_email)
@@ -122,10 +133,11 @@ async function accountLogin(req, res) {
             } else {
                 res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
             }
+            req.flash("success", "Login successful! Welcome back.")
             return res.redirect("/account/")
         }
         else {
-            req.flash("message notice", "Please check your credentials and try again.")
+            req.flash("notice", "Please check your credentials and try again.")
             res.status(400).render("account/login", {
                 title: "Login",
                 nav,

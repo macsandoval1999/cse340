@@ -10,13 +10,12 @@
 
 
 <%# Flash Messages %>
-<%- messages() %> 
-
+<%- messages() %>
 <% if (errors) { %>
-    <ul class="flashBox">
+    <ul class="notice flashBox">
         <% errors.array().forEach(error => { %>
             <% if (error.msg !== 'Invalid value') { %>
-                <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+                <li><%= error.msg %></li>
             <% } %>
         <% }) %>
     </ul>

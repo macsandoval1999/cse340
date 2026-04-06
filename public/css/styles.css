@@ -142,17 +142,25 @@ Error Page Styles
 Flash Message Styles
 ************************************************/
 
-.flashMessage {
+.flashBox {
   width: 100%;
   padding: 5px;
   border: 1px solid rgb(255, 0, 0);
   border-radius: 5px;
 }
 
+.success {
+  color: rgb(15, 190, 15);
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgb(15, 190, 15);
+  border-radius: 5px;
+}
+
 .notice, .success {
   font-size: 0.65rem;
   border-radius: 5px;
-  margin-left: 1.5rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .notice {
@@ -160,9 +168,6 @@ Flash Message Styles
   border-color: rgb(255, 0, 0);
 }
 
-.success {
-  color: rgb(15, 190, 15);
-}
 
 
 

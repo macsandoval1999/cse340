@@ -12,6 +12,12 @@
 // Import the inventory model that contains the functions needed to interact with the database for building navigation and classification lists
 const invModel = require("../models/inventory-model") 
 
+// Import the jsonwebtoken module for handling JSON Web Tokens (JWTs) used in authentication and authorization processes
+const jwt = require("jsonwebtoken")
+
+// Import the dotenv module to load environment variables from a .env file, which is used to keep sensitive information such as secrets out of the source code
+require("dotenv").config()
+
 
 
 // The Util Object
@@ -19,8 +25,6 @@ const invModel = require("../models/inventory-model")
 The Util object contains helper functions for the entire application, such as building navigation, formatting data, and handling errors. This object is exported and used in various controllers and routes to provide common functionality across the application.
 ****************************/
 const Util = {} 
-
-
 
 // Function to build the navigation HTML
 Util.getNav = async function (req, res, next) { 
@@ -44,8 +48,6 @@ Util.getNav = async function (req, res, next) {
     return list
 }
 
-
-
 // Function to build the classification dropdown list HTML
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
@@ -61,8 +63,6 @@ Util.buildClassificationList = async function (classification_id = null) {
     classificationList += "</select>"
     return classificationList
 }
-
-
 
 // Function to build the classification view HTML
 Util.buildClassificationGrid = async function (data) { 
@@ -93,8 +93,6 @@ Util.buildClassificationGrid = async function (data) {
     return grid 
 }
 
-
-
 // Build the inventory detail view HTML
 Util.buildVehicleDetail = async function (vehicle) { 
     if (!vehicle) {
@@ -123,11 +121,31 @@ Util.buildVehicleDetail = async function (vehicle) {
     return detail
 }
 
-
-
 // Function to handle errors in async functions
+// Wrap other functions in this for general error handling
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-/* Wrap other functions in this for general error handling */
+
+
+// Middleware to check JWT token for protected routes
+Util.checkJWTToken = (req, res, next) => {
+    if (req.cookies.jwt) {
+        jwt.verify(
+            req.cookies.jwt,
+            process.env.ACCESS_TOKEN_SECRET,
+            function (err, accountData) {
+                if (err) {
+                    req.flash("notice", "Please log in.")
+                    res.clearCookie("jwt")
+                    return res.redirect("/account/login")
+                }
+                res.locals.accountData = accountData
+                res.locals.loggedin = 1
+                next()
+            })
+    } else {
+        next()
+    }
+}
 
 
 
