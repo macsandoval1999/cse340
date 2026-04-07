@@ -403,7 +403,7 @@ Inventory Management Page Styles
 *********************************************/
 .inventory-management {
   margin: 1.5rem auto;
-  max-width: 400px;
+  max-width: 550px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.295);
   border-radius: 5px;
 }
@@ -442,6 +442,71 @@ Inventory Management Page Styles
 
 
 
+/***********************************************
+Add Inventory Page Styles
+************************************************/
+#inventoryDisplay {
+  margin: 1rem auto;
+  border-collapse: collapse;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 550px;
+}
+
+.inventory-section noscript {
+  display: block;
+  color: rgba(255, 0, 0, 0.342);
+  font-weight: 700;
+  margin: 0 auto;
+  max-width: 550px;
+}
+
+.inventory-filter {
+  margin: 0 auto 1rem auto;
+  max-width: 550px;
+  line-height: 1.6;
+}
+
+.inventory-filter select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+#inventoryDisplay th, #inventoryDisplay td {
+  border: 1px solid var(--primary-color);
+  padding: 8px;
+  text-align: left;
+}
+
+#inventoryDisplay thead tr:first-child {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: none;
+}
+
+#inventoryDisplay thead td, #inventoryDisplay thead th, #inventoryDisplay tbody td {
+  border: none;
+}
+
+#inventoryDisplay tbody tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+#inventoryDisplay a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#inventoryDisplay a:hover {
+  text-decoration: underline;
+}
+
+
+
 /*********************************************
 Add Classification Page Styles
 *********************************************/
@@ -451,12 +516,6 @@ Add Classification Page Styles
   font-style: italic;
   opacity: 0.6;
 }
-
-
-
-/***********************************************
-Add Inventory Page Styles
-************************************************/
 
 
 

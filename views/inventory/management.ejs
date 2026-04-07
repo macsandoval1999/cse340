@@ -25,3 +25,15 @@
         <li><a href="/inv/add-inventory">Add a New Vehicle</a></li>
     </ul>
 </section>
+
+<section class="inventory-section"> 
+    <div class="inventory-filter">
+        <h2>Inventory Management</h2>
+        <p>Choose a classification to see those inventory items.</p>
+        <%- classificationSelect %>
+    </div>
+    <table id="inventoryDisplay"></table>
+    <noscript>**JavaScript must be enabled to use this page.**</noscript>
+</section>
+
+<script src="../../js/inventory.js" defer></script>

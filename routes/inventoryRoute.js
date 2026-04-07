@@ -32,6 +32,8 @@ const router = new express.Router()
 // Route to build inventory management view
 router.get("/", utilities.handleErrors(invController.buildManagement)) 
 
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 // Route to build Add Classification view
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification)) 
 
