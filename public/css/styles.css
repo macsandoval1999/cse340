@@ -142,25 +142,17 @@ Error Page Styles
 Flash Message Styles
 ************************************************/
 
-.flashBox {
+.flashMessage {
   width: 100%;
   padding: 5px;
   border: 1px solid rgb(255, 0, 0);
   border-radius: 5px;
 }
 
-.success {
-  color: rgb(15, 190, 15);
-  width: 100%;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid rgb(15, 190, 15);
-  border-radius: 5px;
-}
-
 .notice, .success {
   font-size: 0.65rem;
   border-radius: 5px;
-  padding: 0.5rem 1.5rem;
+  margin-left: 1.5rem;
 }
 
 .notice {
@@ -168,6 +160,9 @@ Flash Message Styles
   border-color: rgb(255, 0, 0);
 }
 
+.success {
+  color: rgb(15, 190, 15);
+}
 
 
 
@@ -214,22 +209,6 @@ Account Login Page Styles
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-}
-
-.account-form select,
-.account-form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-}
-
-.account-form textarea {
-  min-height: 120px;
-  resize: vertical;
 }
 
 .account-form button {
@@ -560,10 +539,6 @@ Inventory Detail Page Styles
 .vehicle-detail__info h2 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.11);
-  border-radius: 5px 5px 0 0;
-  padding: 0.5rem;
-  border-bottom: 5px solid var(--accent-color);
 }
 
 .vehicle-detail__price,
@@ -572,18 +547,8 @@ Inventory Detail Page Styles
   margin-bottom: 0.5rem;
 }
 
-.vehicle-detail__info {
-  border: 1px solid rgba(0, 0, 0, 0.11);
-  border-radius: 5px;
-}
-
 .vehicle-detail__info p {
   margin-bottom: 0.5rem;
-  padding: 0.5rem;
-}
-
-.vehicle-detail__info p:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
 }
 
 
@@ -670,8 +635,7 @@ Media Queries
 
   .vehicle-detail {
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
     gap: 24px;
   }
 
