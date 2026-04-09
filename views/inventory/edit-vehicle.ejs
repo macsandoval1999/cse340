@@ -19,12 +19,12 @@
 </ul>
 <% } %>
 
-<form action="/inv/add-inventory" method="POST" class="account-form inventory-form">
+<form action="/inv/update" method="POST" class="account-form inventory-form" id="updateForm">
     <fieldset>
-        <legend>Add a Vehicle to Inventory</legend>
+        <legend>Edit Vehicle Below</legend>
 
         <label>Classification
-            <%- classificationList %>
+            <%- classificationSelect %>
         </label>
 
         <label>Make
@@ -76,6 +76,10 @@
                 value="<%= locals.inv_color %>" title="Enter the vehicle color (letters only).">
         </label>
 
-        <button type="submit">Add Inventory</button>
+        <button disabled type="submit">Update Vehicle</button>
+
+        <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
     </fieldset>
 </form>
+
+<script src="../../js/edit-vehicle.js" defer></script>

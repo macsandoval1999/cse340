@@ -155,5 +155,112 @@ validate.checkInventoryData = async (req, res, next) => {
 
 
 
+// RULES: Update Inventory Form validation rules
+validate.updateInventoryRules = () => {
+    return [
+        body("inv_id")
+            .trim()
+            .notEmpty()
+            .withMessage("Missing inventory id.")
+            .isInt({ min: 1 })
+            .withMessage("Inventory id must be a valid number."),
+
+        body("classification_id")
+            .trim()
+            .notEmpty()
+            .withMessage("Please choose a classification.")
+            .isInt({ min: 1 })
+            .withMessage("Please choose a valid classification."),
+
+        body("inv_make")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Please provide a vehicle make."),
+
+        body("inv_model")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Please provide a vehicle model."),
+
+        body("inv_year")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide a model year.")
+            .matches(/^\d{4}$/)
+            .withMessage("Year must be four digits."),
+
+        body("inv_description")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide a vehicle description."),
+
+        body("inv_image")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide an image path."),
+
+        body("inv_thumbnail")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide a thumbnail path."),
+
+        body("inv_price")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide a price.")
+            .isFloat({ min: 0 })
+            .withMessage("Price must be a valid number."),
+
+        body("inv_miles")
+            .trim()
+            .notEmpty()
+            .withMessage("Please provide mileage.")
+            .isInt({ min: 0 })
+            .withMessage("Mileage must be a whole number."),
+
+        body("inv_color")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Please provide a vehicle color."),
+    ]
+}
+
+// CHECKER: Check Update Inventory Form data and return errors if validation rules are not met
+validate.checkUpdateData = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const nav = await utilities.getNav()
+        const classificationSelect = await utilities.buildClassificationList(req.body.classification_id)
+        const itemName = `${req.body.inv_make} ${req.body.inv_model}`
+
+        res.status(400).render("./inventory/edit-vehicle", {
+            title: `Edit ${itemName}`,
+            nav,
+            classificationSelect,
+            errors,
+            inv_id: req.body.inv_id,
+            inv_make: req.body.inv_make,
+            inv_model: req.body.inv_model,
+            inv_year: req.body.inv_year,
+            inv_description: req.body.inv_description,
+            inv_image: req.body.inv_image,
+            inv_thumbnail: req.body.inv_thumbnail,
+            inv_price: req.body.inv_price,
+            inv_miles: req.body.inv_miles,
+            inv_color: req.body.inv_color,
+            classification_id: req.body.classification_id,
+        })
+        return
+    }
+
+    next()
+}
+
+
+
 // Export the validate object containing all validation rules and functions
 module.exports = validate

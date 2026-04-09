@@ -65,7 +65,15 @@ router.get("/detail/:invId", utilities.handleErrors(invController.buildByInvento
 // Route to trigger an intentional error
 router.get("/error", utilities.handleErrors(invController.triggerError))
 
+// Route to build the vehicle update view
+router.get("/edit/:invId", utilities.handleErrors(invController.buildUpdateVehicle));
 
+// Route to process Update Inventory form submission
+router.post("/update",
+	invValidate.updateInventoryRules(),
+	invValidate.checkUpdateData,
+	utilities.handleErrors(invController.updateVehicle)
+)
 
 // Export
 module.exports = router; 

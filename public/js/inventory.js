@@ -27,6 +27,10 @@ classificationList.addEventListener("change", function () {
 // Build inventory items into HTML table components and inject into DOM 
 function buildInventoryList(data) {
     let inventoryDisplay = document.getElementById("inventoryDisplay");
+    if (!Array.isArray(data) || data.length === 0) {
+        inventoryDisplay.innerHTML = '<tbody id="noVehicles"><tr><td>No vehicles found.</td></tr></tbody>';
+        return;
+    }
     // Set up the table labels 
     let dataTable = '<thead>';
     dataTable += '<tr><th>Vehicle Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>';
