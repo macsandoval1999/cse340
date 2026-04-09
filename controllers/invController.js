@@ -82,12 +82,14 @@ invController.addClassification = async function (req, res, next) {
     const { classification_name } = req.body
     const result = await invModel.addClassification(classification_name)
     if (result) {
-        nav = await utilities.getNav()
         req.flash("success", `${classification_name} classification was added successfully.`)
-        res.status(201).render("./inventory/management", {
+        nav = await utilities.getNav()
+        const classificationSelect = await utilities.buildClassificationList()
+        return res.status(201).render("./inventory/management", {
             title: "Inventory Management",
             nav,
             errors: null,
+            classificationSelect,
         })
     } else {
         req.flash("notice", "Sorry, the classification could not be added. Please try again.")
@@ -130,12 +132,14 @@ invController.addInventory = async function (req, res, next) {
     )
 
     if (result) {
-        nav = await utilities.getNav()
         req.flash("success", `${inv_make} ${inv_model} was added successfully.`)
-        res.status(201).render("./inventory/management", {
+        nav = await utilities.getNav()
+        const classificationSelect = await utilities.buildClassificationList()
+        return res.status(201).render("./inventory/management", {
             title: "Inventory Management",
             nav,
             errors: null,
+            classificationSelect,
         })
     } else {
         const classificationList = await utilities.buildClassificationList(classification_id)
@@ -210,13 +214,14 @@ invController.getInventoryJSON = async (req, res, next) => {
 // Build Edit Vehicle view
 invController.buildUpdateVehicle = async function (req, res, next) { 
     const inv_id = parseInt(req.params.invId)
-    let nav = await utilities.getNav()
     const vehicleData = await invModel.getInventoryById(inv_id)
-    const classificationSelect = await utilities.buildClassificationList(vehicleData.classification_id)
-    const itemName = `${vehicleData.inv_make} ${vehicleData.inv_model}`
     if (!vehicleData) {
         throw { status: 404, message: "Sorry, that vehicle could not be found." }
     }
+
+    const nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList(vehicleData.classification_id)
+    const itemName = `${vehicleData.inv_make} ${vehicleData.inv_model}`
     res.render("./inventory/edit-vehicle", { 
         title: "Edit " + itemName,
         nav,
@@ -236,7 +241,7 @@ invController.buildUpdateVehicle = async function (req, res, next) {
     })
 }
 
-// Update Inventory
+// Process Update Inventory
 invController.updateVehicle = async function (req, res, next) {
     let nav = await utilities.getNav()
     const {
@@ -291,6 +296,50 @@ invController.updateVehicle = async function (req, res, next) {
             inv_color,
         })
     }
+}
+
+// Build Delete Confirmation view
+invController.buildDeleteConfirm = async function (req, res, next) {
+    const inv_id = parseInt(req.params.invId)
+    const nav = await utilities.getNav()
+    const vehicleData = await invModel.getInventoryById(inv_id)
+    if (!vehicleData) {
+        throw { status: 404, message: "Sorry, that vehicle could not be found." }
+    }
+
+    const itemName = `${vehicleData.inv_make} ${vehicleData.inv_model}`
+
+    res.render("./inventory/delete-confirmation", {
+        title: "Delete " + itemName,
+        nav,
+        errors: null,
+        inv_id: vehicleData.inv_id,
+        inv_make: vehicleData.inv_make,
+        inv_model: vehicleData.inv_model,
+        inv_year: vehicleData.inv_year,
+        inv_price: vehicleData.inv_price,
+    })
+}
+
+// Process Inventory Delete
+invController.deleteInventoryItem = async function (req, res, next) {
+    const inv_id = parseInt(req.body.inv_id)
+
+    if (!Number.isInteger(inv_id)) {
+        req.flash("notice", "Invalid inventory id.")
+        return res.redirect("/inv/")
+    }
+
+    const deleteResult = await invModel.deleteInventoryItem(inv_id)
+    const deleteSucceeded = Boolean(deleteResult && deleteResult.rowCount && deleteResult.rowCount > 0)
+
+    if (deleteSucceeded) {
+        req.flash("success", "The inventory item was deleted successfully.")
+        return res.redirect("/inv/")
+    }
+
+    req.flash("notice", "Sorry, the delete could not be completed. Please try again.")
+    return res.redirect(`/inv/delete/${inv_id}`)
 }
 
 // Intentional error for debugging

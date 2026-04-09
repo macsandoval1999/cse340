@@ -62,13 +62,13 @@
             different vehicle image.</p>
 
         <label>Price
-            <input type="number" id="inv_price" name="inv_price" required min="0"
-                value="<%= locals.inv_price %>" title="Enter the vehicle price" placeholder="55001">
+            <input type="number" id="inv_price" name="inv_price" required min="0" maxlength="6" max="999999" pattern="^\d{6}$"
+                value="<%= locals.inv_price %>" title="Enter the vehicle price. 0-999999" placeholder="999999">
         </label>
 
         <label>Miles
-            <input type="number" id="inv_miles" name="inv_miles" required min="0" step="1"
-                value="<%= locals.inv_miles %>" title="Enter the vehicle mileage.">
+            <input type="number" id="inv_miles" name="inv_miles" required min="0" max="999999" maxlength="6" pattern="^\d{6}$"
+                value="<%= locals.inv_miles %>" title="Enter the vehicle mileage. 0-999999">
         </label>
 
         <label>Color

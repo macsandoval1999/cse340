@@ -1,6 +1,3 @@
-<%# Scripts specific to the registration page. This variable will be included in the head partial, allowing us to include page-specific scripts when needed. %>
-<% pageScripts = '<script src="/js/registration.js" type="module"></script>' %>
-
 <%# The Content Heading %>
 <% if (title) { %>
     <h1 class="accountTitle">
@@ -60,3 +57,5 @@
         <p>Already have an account? <a href="/account/login">Login here</a>.</p>
     </div>
 </form>
+
+<script src="../../js/registration.js" type="module"></script>

@@ -67,7 +67,7 @@
         </label>
 
         <label>Miles
-            <input type="number" id="inv_miles" name="inv_miles" required min="0" step="1"
+            <input type="number" id="inv_miles" name="inv_miles" required min="0" max="999999" step="1"
                 value="<%= locals.inv_miles %>" title="Enter the vehicle mileage.">
         </label>
 
@@ -79,6 +79,7 @@
         <button disabled type="submit">Update Vehicle</button>
 
         <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+        
     </fieldset>
 </form>
 

@@ -114,7 +114,7 @@ validate.inventoryRules = () => {
             .trim()
             .notEmpty()
             .withMessage("Please provide mileage.")
-            .isInt({ min: 0 })
+            .isInt({ min: 0, max: 999999 })
             .withMessage("Mileage must be a whole number."),
 
         body("inv_color")
@@ -217,7 +217,7 @@ validate.updateInventoryRules = () => {
             .trim()
             .notEmpty()
             .withMessage("Please provide mileage.")
-            .isInt({ min: 0 })
+            .isInt({ min: 0, max: 2147483647 })
             .withMessage("Mileage must be a whole number."),
 
         body("inv_color")

@@ -25,7 +25,7 @@ async function addClassification(classification_name) {
     try {
         const result = await pool.query(
             // SQL query to insert a new classification into the database, returning the newly created classification
-            "INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *",
+            "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *",
             [classification_name]
         )
         return result.rows[0]
@@ -50,7 +50,7 @@ async function addInventory(
 ) {
     try { 
         // SQL query to insert a new inventory item into the database, returning the newly created item
-        const sql = `INSERT INTO public.inventory
+        const sql = `INSERT INTO inventory
             (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
         const result = await pool.query(sql, [
@@ -75,7 +75,7 @@ async function addInventory(
 // Get all classification data
 async function getClassifications() { 
     // SQL query to select all classifications from the database, ordered by classification name
-    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name") 
+    return await pool.query("SELECT * FROM classification ORDER BY classification_name") 
 }
 
 //Get all inventory items and classification_name by classification_id
@@ -83,8 +83,8 @@ async function getInventoryByClassificationId(classification_id) {
     try {
         // SQL query to select all inventory items that belong to a specific classification, joining the inventory and classification tables to also retrieve the classification name
         const data = await pool.query( 
-            `SELECT * FROM public.inventory AS i
-            JOIN public.classification AS c
+            `SELECT * FROM inventory AS i
+            JOIN classification AS c
             ON i.classification_id = c.classification_id
             WHERE i.classification_id = $1`,
             [classification_id] 
@@ -100,8 +100,8 @@ async function getInventoryById(inv_id) {
     try {
         // SQL query to select a specific inventory item by its ID, joining the inventory and classification tables to also retrieve the classification name
         const data = await pool.query(
-            `SELECT * FROM public.inventory AS i
-            JOIN public.classification AS c
+            `SELECT * FROM inventory AS i
+            JOIN classification AS c
             ON i.classification_id = c.classification_id
             WHERE i.inv_id = $1`,
             [inv_id]
@@ -127,7 +127,7 @@ async function updateInventory(
     inv_color,
 ) {
     try {
-        const sql = `UPDATE public.inventory
+        const sql = `UPDATE inventory
             SET classification_id = $1,
                 inv_make = $2,
                 inv_model = $3,
@@ -160,7 +160,19 @@ async function updateInventory(
     }
 }
 
+// Delete Inventory Item
+async function deleteInventoryItem(inv_id) {
+    try {
+        const sql = "DELETE FROM inventory WHERE inv_id = $1"
+        const data = await pool.query(sql, [inv_id])
+        return data
+    } catch (error) {
+        console.error("Delete Inventory Error: " + error)
+        return null
+    }
+}
+
 
 
 // Export the functions to be used in other parts of the application
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory } 
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory, deleteInventoryItem } 

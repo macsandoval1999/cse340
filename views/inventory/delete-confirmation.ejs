@@ -1,0 +1,49 @@
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+<% if (errors) { %>
+<ul class="flashBox">
+<% errors.array().forEach(error=> { %>
+    <% if (error.msg !=='Invalid value' ) { %>
+        <div class="flashMessage">
+            <li class="notice">
+                <%= error.msg %>
+            </li>
+        </div>
+        <% } %>
+            <% }) %>
+</ul>
+<% } %>
+
+<form action="/inv/delete" method="POST" class="account-form inventory-form">
+    <fieldset>
+        <legend>Confirm Vehicle Deletion</legend>
+
+        <p id="deleteWarning">**This delete will be permanent**</p>
+
+        <label>Make
+            <input type="text" id="inv_make" name="inv_make" readonly value="<%= locals.inv_make %>">
+        </label>
+
+        <label>Model
+            <input type="text" id="inv_model" name="inv_model" readonly value="<%= locals.inv_model %>">
+        </label>
+
+        <label>Year
+            <input type="text" id="inv_year" name="inv_year" readonly value="<%= locals.inv_year %>">
+        </label>
+
+        <label>Price
+            <input type="number" id="inv_price" name="inv_price" readonly value="<%= locals.inv_price %>">
+        </label>
+
+        <button type="submit">Delete</button>
+
+        <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+    
+    </fieldset>
+</form>

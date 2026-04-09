@@ -19,7 +19,7 @@ const utilities = require("../utilities/")
 const invValidate = require("../utilities/inventory-validation")
 
 // Import the Express framework to create a router
-const express = require("express") 
+const express = require("express")
 
 
 
@@ -27,15 +27,15 @@ const express = require("express")
 /**********************
  * The Router object is created using express.Router() and is used to define routes for inventory management operations. It allows us to handle HTTP requests related to inventory management, and to serve the appropriate views or process form submissions. By using a router, we can organize our routes in a modular way, making it easier to manage and maintain our code. The router will be exported at the end of the file so it can be used in other parts of the application.
  **********************/
-const router = new express.Router() 
+const router = new express.Router()
 
 // Route to build inventory management view
-router.get("/", utilities.handleErrors(invController.buildManagement)) 
+router.get("/", utilities.handleErrors(invController.buildManagement))
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to build Add Classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification)) 
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification))
 
 // Route to build Add Inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory))
@@ -57,10 +57,10 @@ router.post(
 )
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)); 
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
 // Route to build inventory detail view
-router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId)) 
+router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId))
 
 // Route to trigger an intentional error
 router.get("/error", utilities.handleErrors(invController.triggerError))
@@ -68,12 +68,20 @@ router.get("/error", utilities.handleErrors(invController.triggerError))
 // Route to build the vehicle update view
 router.get("/edit/:invId", utilities.handleErrors(invController.buildUpdateVehicle));
 
+// Route to build the delete confirmation view
+router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteConfirm))
+
 // Route to process Update Inventory form submission
 router.post("/update",
 	invValidate.updateInventoryRules(),
 	invValidate.checkUpdateData,
 	utilities.handleErrors(invController.updateVehicle)
 )
+
+// Route to process Delete Inventory form submission
+router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem))
+
+
 
 // Export
 module.exports = router; 

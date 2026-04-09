@@ -540,7 +540,11 @@ Inventory Management Page Styles
   cursor: not-allowed;
 }
 
-
+#deleteWarning {
+  color: rgb(255, 0, 0);
+  font-weight: 700;
+  text-align: center;
+}
 
 /*********************************************
 Add Classification Page Styles
