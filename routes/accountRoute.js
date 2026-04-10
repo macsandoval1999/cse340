@@ -38,6 +38,30 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin))
 // Process the login attempt
 router.post('/login', regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin)) 
 
+// Process logout request
+router.get('/logout', utilities.handleErrors(accountController.accountLogout))
+
+// Deliver account update view
+router.get('/update/:accountId', utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateAccount))
+
+// Process account update
+router.post(
+    '/update',
+    utilities.checkLogin,
+    regValidate.updateRules(),
+    regValidate.checkUpdateData,
+    utilities.handleErrors(accountController.updateAccount)
+)
+
+// Process password change
+router.post(
+    '/update-password',
+    utilities.checkLogin,
+    regValidate.passwordRules(),
+    regValidate.checkPasswordData,
+    utilities.handleErrors(accountController.updatePassword)
+)
+
 // Display registration view
 router.get('/registration', utilities.handleErrors(accountController.buildRegistration)) 
 

@@ -1,0 +1,71 @@
+<%# The Content Heading %>
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%# Flash Messages %>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice flashBox">
+        <% errors.array().forEach(error => { %>
+            <% if (error.msg !== 'Invalid value') { %>
+                <li><%= error.msg %></li>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<form action="/account/update" method="POST" class="account-form">
+    <fieldset>
+        <legend>Account Update</legend>
+
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+
+        <label for="account_firstname">First name
+            <input id="account_firstname" name="account_firstname" type="text" required autocomplete="given-name" value="<%= locals.account_firstname %>">
+        </label>
+
+        <label for="account_lastname">Last name
+            <input id="account_lastname" name="account_lastname" type="text" required autocomplete="family-name" value="<%= locals.account_lastname %>">
+        </label>
+
+        <label for="account_email">Email
+            <input id="account_email" name="account_email" type="email" required autocomplete="email" value="<%= locals.account_email %>">
+        </label>
+
+        <button type="submit">Update Account</button>
+    </fieldset>
+</form>
+
+<form action="/account/update-password" method="POST" class="account-form">
+    <fieldset>
+        <legend>Change Password</legend>
+
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+
+        <label for="account_password">New password
+            <input
+                type="password"
+                id="account_password"
+                name="account_password"
+                required
+                autocomplete="new-password"
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                title="Password must be at least 12 characters, include an uppercase letter, a number, and a special character."
+            >
+        </label>
+
+        <div class="password-requirements">
+            <p>Entering a password will change your current password. Password must be at least 12 characters long and include:</p>
+            <ul>
+                <li>At least one uppercase letter</li>
+                <li>At least one number</li>
+                <li>At least one special character</li>
+            </ul>
+        </div>
+
+        <button type="submit">Change Password</button>
+    </fieldset>
+</form>

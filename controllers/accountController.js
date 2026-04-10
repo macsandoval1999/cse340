@@ -64,6 +64,43 @@ accountController.buildManagement = async function (req, res, next) {
     })
 }
 
+// Deliver update account view
+accountController.buildUpdateAccount = async function (req, res, next) {
+    const nav = await utilities.getNav()
+    const requestedId = parseInt(req.params.accountId)
+    const loggedInId = res.locals.accountData?.account_id ? parseInt(res.locals.accountData.account_id) : null
+
+    if (!requestedId || !loggedInId) {
+        req.flash("notice", "Please log in.")
+        return res.status(401).render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+        })
+    }
+
+    if (requestedId !== loggedInId) {
+        req.flash("notice", "You can only update your own account.")
+        return res.redirect("/account/")
+    }
+
+    const account = await accountModel.getAccountById(requestedId)
+    if (!account || account instanceof Error) {
+        req.flash("notice", "Account not found.")
+        return res.redirect("/account/")
+    }
+
+    res.render("account/update", {
+        title: "Update Account",
+        nav,
+        errors: null,
+        account_id: account.account_id,
+        account_firstname: account.account_firstname,
+        account_lastname: account.account_lastname,
+        account_email: account.account_email,
+    })
+}
+
 // Process Registration Request
 accountController.registerAccount = async function (req, res) { 
     let nav = await utilities.getNav() 
@@ -133,7 +170,7 @@ accountController.accountLogin = async function (req, res) {
             } else {
                 res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
             }
-            req.flash("success", "Login successful! Welcome back.")
+            req.flash("success", `Login successful! Welcome back, ${accountData.account_firstname}.`)
             return res.redirect("/account/")
         }
         else {
@@ -148,6 +185,108 @@ accountController.accountLogin = async function (req, res) {
     } catch (error) {
         throw new Error('Access Forbidden')
     }
+}
+
+// Process Logout Request
+accountController.accountLogout = async function (req, res) {
+    res.clearCookie("jwt")
+    req.flash("success", "You have been logged out.")
+    return res.redirect("/")
+}
+
+// Process Update Account Request
+accountController.updateAccount = async function (req, res, next) {
+    const nav = await utilities.getNav()
+    const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+    const loggedInId = res.locals.accountData?.account_id ? parseInt(res.locals.accountData.account_id) : null
+    const requestedId = parseInt(account_id)
+
+    if (!requestedId || !loggedInId || requestedId !== loggedInId) {
+        req.flash("notice", "You can only update your own account.")
+        return res.redirect("/account/")
+    }
+
+    const updateResult = await accountModel.updateAccount(requestedId, account_firstname, account_lastname, account_email)
+    if (!updateResult || updateResult instanceof Error) {
+        req.flash("notice", "Sorry, there was an error updating your account.")
+        return res.status(500).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_id: requestedId,
+            account_firstname,
+            account_lastname,
+            account_email,
+        })
+    }
+
+    // Query the updated account data, then refresh the JWT so the header/accountData reflects changes
+    const updatedAccountData = await accountModel.getAccountById(requestedId)
+    if (!updatedAccountData || updatedAccountData instanceof Error) {
+        req.flash("notice", "Account updated, but we could not load the updated data.")
+        return res.redirect("/account/")
+    }
+
+    const accessToken = jwt.sign(updatedAccountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    if (process.env.NODE_ENV === "development") {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+
+    req.flash("success", "Account information updated successfully.")
+    return res.redirect("/account/")
+}
+
+// Process Password Change Request
+accountController.updatePassword = async function (req, res, next) {
+    const nav = await utilities.getNav()
+    const { account_id, account_password } = req.body
+
+    const loggedInId = res.locals.accountData?.account_id ? parseInt(res.locals.accountData.account_id) : null
+    const requestedId = parseInt(account_id)
+
+    if (!requestedId || !loggedInId || requestedId !== loggedInId) {
+        req.flash("notice", "You can only update your own password.")
+        return res.redirect("/account/")
+    }
+
+    let hashedPassword
+    try {
+        hashedPassword = await bcrypt.hashSync(account_password, 10)
+    } catch (error) {
+        req.flash("notice", "Sorry, there was an error updating your password.")
+        return res.status(500).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_id: requestedId,
+            account_firstname: res.locals.accountData.account_firstname,
+            account_lastname: res.locals.accountData.account_lastname,
+            account_email: res.locals.accountData.account_email,
+        })
+    }
+
+    const updateResult = await accountModel.updatePassword(requestedId, hashedPassword)
+    if (!updateResult || updateResult instanceof Error) {
+        req.flash("notice", "Sorry, there was an error updating your password.")
+        return res.status(500).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_id: requestedId,
+            account_firstname: res.locals.accountData.account_firstname,
+            account_lastname: res.locals.accountData.account_lastname,
+            account_email: res.locals.accountData.account_email,
+        })
+    }
+
+    // Query the account after password update
+    await accountModel.getAccountById(requestedId)
+
+    req.flash("success", "Password updated successfully.")
+    return res.redirect("/account/")
 }
 
 

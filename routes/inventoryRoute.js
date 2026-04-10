@@ -30,19 +30,20 @@ const express = require("express")
 const router = new express.Router()
 
 // Route to build inventory management view
-router.get("/", utilities.handleErrors(invController.buildManagement))
+router.get("/", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildManagement))
 
-router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/getInventory/:classification_id", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to build Add Classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification))
+router.get("/add-classification", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildAddClassification))
 
 // Route to build Add Inventory view
-router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory))
+router.get("/add-inventory", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildAddInventory))
 
 // Route to process Add Classification form submission
 router.post(
 	"/add-classification",
+	utilities.handleErrors(utilities.checkEmployeeOrAdmin),
 	invValidate.classificationRules(),
 	invValidate.checkClassificationData,
 	utilities.handleErrors(invController.addClassification)
@@ -51,6 +52,7 @@ router.post(
 // Route to process Add Inventory form submission
 router.post(
 	"/add-inventory",
+	utilities.handleErrors(utilities.checkEmployeeOrAdmin),
 	invValidate.inventoryRules(),
 	invValidate.checkInventoryData,
 	utilities.handleErrors(invController.addInventory)
@@ -66,20 +68,21 @@ router.get("/detail/:invId", utilities.handleErrors(invController.buildByInvento
 router.get("/error", utilities.handleErrors(invController.triggerError))
 
 // Route to build the vehicle update view
-router.get("/edit/:invId", utilities.handleErrors(invController.buildUpdateVehicle));
+router.get("/edit/:invId", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildUpdateVehicle));
 
 // Route to build the delete confirmation view
-router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteConfirm))
+router.get("/delete/:invId", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildDeleteConfirm))
 
 // Route to process Update Inventory form submission
 router.post("/update",
+	utilities.handleErrors(utilities.checkEmployeeOrAdmin),
 	invValidate.updateInventoryRules(),
 	invValidate.checkUpdateData,
 	utilities.handleErrors(invController.updateVehicle)
 )
 
 // Route to process Delete Inventory form submission
-router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem))
+router.post("/delete", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.deleteInventoryItem))
 
 
 

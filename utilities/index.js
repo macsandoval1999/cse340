@@ -157,6 +157,37 @@ Util.checkLogin = (req, res, next) => {
     }
 }
 
+// checkEmployeeOrAdmin middleware to protect inventory admin routes
+Util.checkEmployeeOrAdmin = async (req, res, next) => {
+    try {
+        if (!res.locals.loggedin || !res.locals.accountData) {
+            req.flash("notice", "Please log in with an Employee or Admin account.")
+            const nav = await Util.getNav()
+            return res.status(401).render("account/login", {
+                title: "Login",
+                nav,
+                errors: null,
+            })
+        }
+
+        const accountType = res.locals.accountData.account_type
+        if (accountType === "Employee" || accountType === "Admin") {
+            return next()
+        }
+
+        res.clearCookie("jwt")
+        req.flash("notice", "Access denied. Please log in with an Employee or Admin account.")
+        const nav = await Util.getNav()
+        return res.status(403).render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+        })
+    } catch (err) {
+        return next(err)
+    }
+}
+
 
 
 //Export the Util object containing all utility functions
