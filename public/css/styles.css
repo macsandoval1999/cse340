@@ -166,6 +166,31 @@ Flash Message Styles
 
 
 
+/********************************************
+Account Management Page Styles
+********************************************/
+
+.account-management {
+  padding-bottom: 1rem;
+  min-height: 400px;
+}
+
+.account-management hr {
+  margin: 1.5rem auto;
+  width: 94%;
+  border-top: 2px solid var(--accent-color);
+}
+
+.account-management h3 {
+  color: var(--primary-color);
+  padding: 0 1rem 0.3rem 1rem;
+}
+
+.account-management-link {
+  margin: 1rem 0 0 1rem;
+}
+
+
 
 /*********************************************
 Account Login Page Styles

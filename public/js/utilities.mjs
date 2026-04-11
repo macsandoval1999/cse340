@@ -18,3 +18,4 @@ export function setupPasswordToggle(btnId = "pswdBtn", inputId = "password", ico
         });
     }
 }
+
