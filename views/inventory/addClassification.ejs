@@ -11,7 +11,11 @@
     <ul class="flashBox">
         <% errors.array().forEach(error => { %>
             <% if (error.msg !== 'Invalid value') { %>
-                <div class="flashMessage"><li class="notice"><%= error.msg %></li></div>
+                <div class="flashMessage">
+                    <li class="notice">
+                        <%= error.msg %>
+                    </li>
+                </div>
             <% } %>
         <% }) %>
     </ul>

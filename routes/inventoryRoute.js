@@ -40,6 +40,13 @@ router.get("/add-classification", utilities.handleErrors(utilities.checkEmployee
 // Route to build Add Inventory view
 router.get("/add-inventory", utilities.handleErrors(utilities.checkEmployeeOrAdmin), utilities.handleErrors(invController.buildAddInventory))
 
+// Route to build Delete Classification view
+router.get(
+	"/delete-classification",
+	utilities.handleErrors(utilities.checkEmployeeOrAdmin),
+	utilities.handleErrors(invController.buildDeleteClassification)
+)
+ 
 // Route to process Add Classification form submission
 router.post(
 	"/add-classification",
@@ -56,6 +63,15 @@ router.post(
 	invValidate.inventoryRules(),
 	invValidate.checkInventoryData,
 	utilities.handleErrors(invController.addInventory)
+)
+
+// Route to process Delete Classification form submission
+router.post(
+    "/delete-classification",
+    utilities.handleErrors(utilities.checkEmployeeOrAdmin),
+    invValidate.deleteClassificationRules(),
+    invValidate.checkDeleteClassificationData,
+    utilities.handleErrors(invController.deleteClassification)
 )
 
 // Route to build inventory by classification view

@@ -1,0 +1,35 @@
+<% if (title) { %>
+    <h1 class="accountTitle">
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="flashBox">
+        <% errors.array().forEach(error=> { %>
+            <% if (error.msg !=='Invalid value' ) { %>
+                <div class="flashMessage">
+                    <li class="notice">
+                        <%= error.msg %>
+                    </li>
+                </div>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<form action="/inv/delete-classification" method="POST" class="account-form inventory-form">
+    <fieldset>
+        <legend>Confirm Classification Deletion</legend>
+
+        <p id="deleteWarning">**This delete will be permanent. The classification AND ALL vehicles within it will be deleted.**</p>
+
+        <label for="classificationList">Classification
+            <%- classificationList %>
+        </label>
+
+        <button type="submit">Delete Classification</button>
+
+    </fieldset>
+</form>

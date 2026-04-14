@@ -48,7 +48,7 @@ async function addInventory(
     inv_miles,
     inv_color
 ) {
-    try { 
+    try {
         // SQL query to insert a new inventory item into the database, returning the newly created item
         const sql = `INSERT INTO inventory
             (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
@@ -73,23 +73,23 @@ async function addInventory(
 }
 
 // Get all classification data
-async function getClassifications() { 
+async function getClassifications() {
     // SQL query to select all classifications from the database, ordered by classification name
-    return await pool.query("SELECT * FROM classification ORDER BY classification_name") 
+    return await pool.query("SELECT * FROM classification ORDER BY classification_name")
 }
 
 //Get all inventory items and classification_name by classification_id
-async function getInventoryByClassificationId(classification_id) {  
+async function getInventoryByClassificationId(classification_id) {
     try {
         // SQL query to select all inventory items that belong to a specific classification, joining the inventory and classification tables to also retrieve the classification name
-        const data = await pool.query( 
+        const data = await pool.query(
             `SELECT * FROM inventory AS i
             JOIN classification AS c
             ON i.classification_id = c.classification_id
             WHERE i.classification_id = $1`,
-            [classification_id] 
+            [classification_id]
         )
-        return data.rows 
+        return data.rows
     } catch (error) {
         console.error("getInventoryByClassificationId error: " + error)
     }
@@ -106,7 +106,7 @@ async function getInventoryById(inv_id) {
             WHERE i.inv_id = $1`,
             [inv_id]
         )
-        return data.rows[0] 
+        return data.rows[0]
     } catch (error) {
         console.error("getInventoryById error: " + error)
     }
@@ -127,6 +127,7 @@ async function updateInventory(
     inv_color,
 ) {
     try {
+        // SQL query to update an existing inventory item in the database, returning the updated item
         const sql = `UPDATE inventory
             SET classification_id = $1,
                 inv_make = $2,
@@ -140,6 +141,7 @@ async function updateInventory(
                 inv_color = $10
             WHERE inv_id = $11
             RETURNING *`
+        // Execute the SQL query with the provided parameters and return the updated inventory item
         const data = await pool.query(sql, [
             classification_id,
             inv_make,
@@ -172,7 +174,56 @@ async function deleteInventoryItem(inv_id) {
     }
 }
 
+// Get a single classification by id
+async function getClassificationById(classification_id) {
+    try {
+        const sql = "SELECT classification_id, classification_name FROM classification WHERE classification_id = $1"
+        const data = await pool.query(sql, [classification_id])
+        return data.rows[0] || null
+    } catch (error) {
+        console.error("getClassificationById error: " + error)
+        return null
+    }
+}
+
+// Delete a classification and all associated inventory
+async function deleteClassificationGroup(classification_id) {
+    try {
+        // First: Delete the inventory items where classification_id matches the provided id, and return 1 for each deleted item
+        // Then: Delete the classification where classification_id matches the provided id, and return the deleted classification's id and name
+        // Finally: Select the count of deleted inventory items and the deleted classification's id and name to return as a single result
+        const sql = `WITH deleted_inventory AS (
+                DELETE FROM inventory
+                WHERE classification_id = $1
+                RETURNING 1
+            ), deleted_classification AS (
+                DELETE FROM classification
+                WHERE classification_id = $1
+                RETURNING classification_id, classification_name
+            )
+            SELECT
+                (SELECT COUNT(*)::int FROM deleted_inventory) AS deleted_inventory_count,
+                (SELECT classification_id FROM deleted_classification) AS deleted_classification_id,
+                (SELECT classification_name FROM deleted_classification) AS deleted_classification_name`
+        const data = await pool.query(sql, [classification_id])
+        return data.rows[0] || null
+    } catch (error) {
+        console.error("deleteClassificationGroup error: " + error)
+        return null
+    }
+}
+
 
 
 // Export the functions to be used in other parts of the application
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory, deleteInventoryItem } 
+module.exports = {
+    getClassifications,
+    getInventoryByClassificationId,
+    getInventoryById,
+    addClassification,
+    addInventory,
+    updateInventory,
+    deleteInventoryItem,
+    getClassificationById,
+    deleteClassificationGroup,
+}

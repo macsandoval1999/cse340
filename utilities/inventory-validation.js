@@ -262,5 +262,40 @@ validate.checkUpdateData = async (req, res, next) => {
 
 
 
+// RULES: Delete Classification validation rules
+validate.deleteClassificationRules = () => {
+    return [
+        body("classification_id")
+            .trim()
+            .notEmpty()
+            .withMessage("Please choose a classification.")
+            .isInt({ min: 1 })
+            .withMessage("Please choose a valid classification."),
+    ]
+}
+ 
+// CHECKER: Check Delete Classification form data
+validate.checkDeleteClassificationData = async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const nav = await utilities.getNav()
+        const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+
+        res.status(400).render("./inventory/delete-classification", {
+            title: "Delete Classification",
+            nav,
+            errors,
+            classificationList,
+            classification_id: req.body.classification_id,
+        })
+        return
+    }
+
+    next()
+}
+
+
+
 // Export the validate object containing all validation rules and functions
 module.exports = validate

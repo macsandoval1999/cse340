@@ -6,17 +6,17 @@
 
 <%- messages() %>
 <% if (errors) { %>
-<ul class="flashBox">
-<% errors.array().forEach(error=> { %>
-    <% if (error.msg !=='Invalid value' ) { %>
-        <div class="flashMessage">
-            <li class="notice">
-                <%= error.msg %>
-            </li>
-        </div>
-        <% } %>
-            <% }) %>
-</ul>
+    <ul class="flashBox">
+        <% errors.array().forEach(error=> { %>
+            <% if (error.msg !=='Invalid value' ) { %>
+                <div class="flashMessage">
+                    <li class="notice">
+                        <%= error.msg %>
+                    </li>
+                </div>
+            <% } %>
+        <% }) %>
+    </ul>
 <% } %>
 
 <form action="/inv/add-inventory" method="POST" class="account-form inventory-form">
