@@ -3,6 +3,7 @@
  * Routes for Serving Static Files
  * This file is responsible for defining routes that serve static files such as CSS, JavaScript, and images. It uses the Express framework to create a router and the express.static middleware to specify the directories from which static assets can be served. By defining these routes, the application can efficiently deliver the necessary static resources to the client when requested, ensuring that the frontend of the application has access to the stylesheets, scripts, and images it needs to function properly.
  * This object is exported and used in the main application file server.js to set up the routes for serving static files.
+If you look at the server.js file, you will see that this is the fir
 *********************************************/
 
 
